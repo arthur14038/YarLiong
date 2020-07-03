@@ -23,11 +23,19 @@ public class MainGameLogic : SingletonMonoBehavior<MainGameLogic>
         Debug.LogFormat("MainGameLogic RegisterSceneController: {0}", controller.GetType().ToString());
     }
 
-    public IEnumerator LoadScene(SceneName sceneName)
+    public void LoadScene(SceneName sceneName)
     {
-        yield return StartCoroutine(mLoadingView.Show(mModel.GetLoadingTips()));
+        Debug.LogFormat("MainGameLogic LoadScene: {0}", sceneName);
+        mSceneController = null;
+        StartCoroutine(LoadNextScene(sceneName.ToString()));
+    }
 
-        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName.ToString());
+    IEnumerator LoadNextScene(string sceneName)
+    {
+        if (mLoadingView != null)
+            yield return StartCoroutine(mLoadingView.Show(mModel.GetLoadingTips()));
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
 
         op.allowSceneActivation = false;
         while (op.progress < 0.9f)
@@ -48,7 +56,8 @@ public class MainGameLogic : SingletonMonoBehavior<MainGameLogic>
             yield return StartCoroutine(mSceneController.Init());
         }
 
-        yield return StartCoroutine(mLoadingView.Hide());
+        if (mLoadingView != null)
+            yield return StartCoroutine(mLoadingView.Hide());
     }
 
     IEnumerator Start()
@@ -57,7 +66,8 @@ public class MainGameLogic : SingletonMonoBehavior<MainGameLogic>
         mLoadingView = YarLiongFactory.GetLoadingView();
         mModel = YarLiongFactory.MainGameModel;
 
-        mLoadingView.Init();
+        if(mLoadingView != null)
+            yield return StartCoroutine(mLoadingView.Init());
 
         if(mSceneController != null)
         {
