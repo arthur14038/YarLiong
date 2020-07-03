@@ -25,12 +25,6 @@ namespace YarLiong.View
             throw new System.NotImplementedException();
         }
 
-        public IEnumerator Hide()
-        {
-            yield return null;
-            Hide();
-        }
-
         public IEnumerator Init()
         {
             yield return null;
@@ -39,11 +33,9 @@ namespace YarLiong.View
         public IEnumerator Show(string tips)
         {
             var doText = m_LoadingText.DOText(tips, 3f).Play();
-
             yield return doText.WaitForCompletion();
 
             var doFade = m_LoadingText.DOFade(0f, 1f).Play();
-
             yield return doFade.WaitForCompletion();
         }
 
@@ -53,11 +45,14 @@ namespace YarLiong.View
             m_CanvasGroup.alpha = 1;
         }
 
-        void IView.Hide()
+        public IEnumerator Hide()
         {
+            yield return null;
+
             m_Canvas.enabled = false;
             m_CanvasGroup.alpha = 0;
         }
 
+        void IView.Hide() { }
     }
 }
