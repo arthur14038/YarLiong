@@ -6,28 +6,14 @@ using DG.Tweening;
 
 namespace YarLiong.View
 {
-    public class LoadingView : MonoBehaviour, ILoadingView
+    public class LoadingView : AbstractView, ILoadingView
     {
-        [SerializeField]
-        private Canvas m_Canvas = null;
-        [SerializeField]
-        private CanvasGroup m_CanvasGroup = null;
         [SerializeField]
         private Text m_LoadingText = null;
 
         private void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
-        }
-
-        public void Destroy()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerator Init()
-        {
-            yield return null;
         }
 
         public IEnumerator Show(string tips)
@@ -39,20 +25,16 @@ namespace YarLiong.View
             yield return doFade.WaitForCompletion();
         }
 
-        public void Show()
-        {
-            m_Canvas.enabled = true;
-            m_CanvasGroup.alpha = 1;
-        }
-
-        public IEnumerator Hide()
+        public new IEnumerator Hide()
         {
             yield return null;
 
-            m_Canvas.enabled = false;
-            m_CanvasGroup.alpha = 0;
+            base.Hide();
         }
 
-        void IView.Hide() { }
+        public override IEnumerator Init()
+        {
+            yield return null;
+        }
     }
 }

@@ -17,7 +17,7 @@ public class CheePonView : MonoBehaviour, ICheePonView
 
     public IEnumerator Init()
     {
-        throw new System.NotImplementedException();
+        yield return null;
     }
 
     public void Show()
