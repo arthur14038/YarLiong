@@ -6,6 +6,10 @@ namespace YarLiong.Controller
 {
     public interface IMainSceneListener
     {
+        void OnClickCheePon();
 
+        void OnClickGaoZhi();
+
+        void OnClickLuDouGao();
     }
 }
