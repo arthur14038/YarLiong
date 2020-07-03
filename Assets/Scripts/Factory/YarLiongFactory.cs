@@ -7,9 +7,17 @@ using YarLiong.View;
 
 public class YarLiongFactory
 {
+    static LoadingView loadingView = null;
     public static ILoadingView GetLoadingView()
     {
-        throw new NotImplementedException();
+        if (loadingView == null)
+        {
+            var prefab = Resources.Load<GameObject>("Prefabs/LoadingCanvas");
+            var viewObj = GameObject.Instantiate(prefab);
+            loadingView = viewObj.GetComponent<LoadingView>();
+        }
+
+        return loadingView;
     }
 
     static MainGameModel mainGameModel = null;
