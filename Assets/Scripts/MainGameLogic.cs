@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YarLiong.Controller;
 
 public class MainGameLogic : SingletonMonoBehavior<MainGameLogic>
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        DontDestroyOnLoad(this.gameObject);
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RegisterSceneController(IController controller)
     {
-        
+
     }
 }
