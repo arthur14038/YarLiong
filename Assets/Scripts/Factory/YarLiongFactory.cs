@@ -20,6 +20,13 @@ public class YarLiongFactory
         return loadingView;
     }
 
+    public static IMainSceneView GetMainSceneView()
+    {
+        var prefab = Resources.Load<GameObject>("Prefabs/MainSceneCanvas");
+        var viewObj = GameObject.Instantiate(prefab);
+        return viewObj.GetComponent<MainSceneView>();
+    }
+
     static MainGameModel mainGameModel = null;
     public static IMainGameModel MainGameModel {
         get
