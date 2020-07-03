@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using YarLiong.Controller;
 using YarLiong.View;
 
-public class MainSceneView : MonoBehaviour, IMainSceneView
+public class MainSceneView : AbstractView, IMainSceneView
 {
     IMainSceneListener mMainSceneListener = null;
     [SerializeField]
@@ -15,25 +15,13 @@ public class MainSceneView : MonoBehaviour, IMainSceneView
     [SerializeField]
     Button m_LuDouGaoBotton;
 
-    public IEnumerator Init()
+    public override IEnumerator Init()
     {
         yield return null;
 
         m_CheePonBotton.onClick.AddListener(() => { mMainSceneListener?.OnClickCheePon(); });
         m_GaoZhiBotton.onClick.AddListener(() => { mMainSceneListener?.OnClickGaoZhi(); });
         m_LuDouGaoBotton.onClick.AddListener(() => { mMainSceneListener?.OnClickLuDouGao(); });
-    }
-
-    public void Destroy()
-    {
-    }
-
-    public void Hide()
-    {
-    }
-
-    public void Show()
-    {
     }
 
     public void SetListener(IMainSceneListener listener)
