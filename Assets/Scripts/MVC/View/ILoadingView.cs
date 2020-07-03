@@ -6,6 +6,8 @@ namespace YarLiong.View
 {
     public interface ILoadingView : IView
     {
-        void Show(string tips);
+        IEnumerator Show(string tips);
+
+        new IEnumerator Hide();
     }
 }
