@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace YarLiong.Controller
 {
-    public interface ICheePonListener
+    public interface ICheePonListener: IEscapeListener
     {
     }
 }

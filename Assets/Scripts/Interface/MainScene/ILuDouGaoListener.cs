@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace YarLiong.Controller
 {
-    public interface ILuDouGaoListener
+    public interface ILuDouGaoListener: IEscapeListener
     {
     }
 }

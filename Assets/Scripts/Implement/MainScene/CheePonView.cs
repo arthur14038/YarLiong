@@ -1,39 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using YarLiong.Controller;
 using YarLiong.View;
 
-public class CheePonView : MonoBehaviour, ICheePonView
+public class CheePonView : AbstractView, ICheePonView
 {
-    public void Destroy()
-    {
-        throw new System.NotImplementedException();
-    }
+    [SerializeField]
+    Button m_EscapeButton = null;
+    ICheePonListener mCheePonListener = null;
 
-    public void Hide()
+    public override IEnumerator Init()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public IEnumerator Init()
-    {
+        m_EscapeButton.onClick.AddListener(() => { mCheePonListener.OnClickEscape(ViewPage.CheePon); });
         yield return null;
     }
 
-    public void Show()
+    public void SetListener(ICheePonListener listener)
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        mCheePonListener = listener;
     }
 }

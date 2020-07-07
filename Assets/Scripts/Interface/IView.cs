@@ -2,6 +2,14 @@
 
 namespace YarLiong.View
 {
+    public enum ViewPage
+    {
+        MainScene,
+        CheePon,
+        GaoZhi,
+        LuDouGao,
+    }
+
     public interface IView
     {
         IEnumerator Init();

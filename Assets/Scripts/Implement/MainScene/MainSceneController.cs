@@ -3,7 +3,7 @@ using YarLiong.Controller;
 using YarLiong.View;
 using UnityEngine;
 
-public class MainSceneController : AbstractSceneController, IMainSceneListener
+public class MainSceneController : AbstractSceneController, IMainSceneListener, ICheePonListener
 {
     IMainSceneView mMainSceneView = null;
     ICheePonView mCheePonView = null;
@@ -14,25 +14,44 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener
     {
         mMainSceneView = YarLiongFactory.GetMainSceneView();
         mMainSceneView.SetListener(this);
-
         if (mMainSceneView != null)
             yield return StartCoroutine(mMainSceneView.Init());
 
-        mMainSceneView.Show();
+        mCheePonView = YarLiongFactory.GetCheePonView();
+        mCheePonView.SetListener(this);
+        if (mCheePonView != null)
+            yield return StartCoroutine(mCheePonView.Init());
+
+        mCheePonView?.Hide();
+        mMainSceneView?.Show();
+    }
+
+    public void OnClickEscape(ViewPage currentViewPage)
+    {
+        switch(currentViewPage)
+        {
+            case ViewPage.CheePon:
+                mCheePonView?.Hide();
+                mMainSceneView?.Show();
+                break;
+        }
     }
 
     public void OnClickCheePon()
     {
-        Debug.Log("OnClickCheePon");
+        mMainSceneView?.Hide();
+        mCheePonView?.Show();
     }
 
     public void OnClickGaoZhi()
     {
-        Debug.Log("OnClickGaoZhi");
+        mMainSceneView?.Hide();
+        mGaoZhiView?.Show();
     }
 
     public void OnClickLuDouGao()
     {
-        Debug.Log("OnClickLuDouGao");
+        mMainSceneView?.Hide();
+        mLuDouGaoView?.Show();
     }
 }
