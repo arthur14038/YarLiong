@@ -10,6 +10,7 @@ public enum SceneName
 {
     FirstScene,
     MainScene,
+    GameScene,
 }
 public class MainGameLogic : SingletonMonoBehavior<MainGameLogic>
 {
@@ -20,12 +21,12 @@ public class MainGameLogic : SingletonMonoBehavior<MainGameLogic>
     public void RegisterSceneController(IController controller)
     {
         mSceneController = controller;
-        Debug.LogFormat("MainGameLogic RegisterSceneController: {0}", controller.GetType().ToString());
+        //Debug.LogFormat("MainGameLogic RegisterSceneController: {0}", controller.GetType().ToString());
     }
 
     public void LoadScene(SceneName sceneName)
     {
-        Debug.LogFormat("MainGameLogic LoadScene: {0}", sceneName);
+        //Debug.LogFormat("MainGameLogic LoadScene: {0}", sceneName);
         mSceneController = null;
         StartCoroutine(LoadNextScene(sceneName.ToString()));
     }

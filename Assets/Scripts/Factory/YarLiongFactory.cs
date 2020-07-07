@@ -50,4 +50,14 @@ public class YarLiongFactory
             return mainGameModel;
         }
     }
+
+    public static ICheePonGameModel CheePonGameModel
+    {
+        get
+        {
+            if (mainGameModel == null)
+                mainGameModel = new MainGameModel();
+            return mainGameModel;
+        }
+    }
 }

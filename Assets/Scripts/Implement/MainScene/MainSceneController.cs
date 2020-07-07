@@ -31,6 +31,8 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener, 
         mGaoZhiView?.Hide();
         mCheePonView?.Hide();
         mMainSceneView?.Show();
+
+        yield return null;
     }
 
     public void OnClickEscape(ViewPage currentViewPage)
@@ -68,6 +70,7 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener, 
 
     public void OnClickGame(CheePonGameType gameType)
     {
-        Debug.LogFormat("OnClickGame gameType: {0}", gameType);
+        YarLiongFactory.CheePonGameModel.CurrentCheePonGameType = gameType;
+        MainGameLogic.Instance.LoadScene(SceneName.GameScene);
     }
 }
