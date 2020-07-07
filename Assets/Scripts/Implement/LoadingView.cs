@@ -11,6 +11,8 @@ namespace YarLiong.View
         [SerializeField]
         private Text m_LoadingText = null;
 
+        private Color mTextColor = new Color(0f, 0f, 0f, 1f);
+
         private void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
@@ -18,16 +20,16 @@ namespace YarLiong.View
 
         public IEnumerator Show(string tips)
         {
+            m_LoadingText.color = mTextColor;
+
             var doText = m_LoadingText.DOText(tips, 3f).Play();
             yield return doText.WaitForCompletion();
-
-            var doFade = m_LoadingText.DOFade(0f, 1f).Play();
-            yield return doFade.WaitForCompletion();
         }
 
         public new IEnumerator Hide()
         {
-            yield return null;
+            var doFade = m_LoadingText.DOFade(0f, 1f).Play();
+            yield return doFade.WaitForCompletion();
 
             base.Hide();
         }

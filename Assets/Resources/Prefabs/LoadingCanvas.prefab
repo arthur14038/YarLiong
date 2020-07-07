@@ -60,7 +60,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &2959508150511000095
 MonoBehaviour:
@@ -127,8 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ViewCanvas: {fileID: 2959508150511000088}
   m_ViewCanvasGroup: {fileID: 2959508150511000090}
-  m_Canvas: {fileID: 2959508150511000088}
-  m_CanvasGroup: {fileID: 2959508150511000090}
   m_LoadingText: {fileID: 2959508151645050043}
 --- !u!1 &2959508151429117067
 GameObject:
