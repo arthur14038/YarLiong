@@ -41,6 +41,13 @@ public class YarLiongFactory
         return viewObj.GetComponent<GaoZhiView>();
     }
 
+    public static ILuDouGaoView GetLuDouGaoView()
+    {
+        var prefab = Resources.Load<GameObject>("Prefabs/LuDouGaoCanvas");
+        var viewObj = GameObject.Instantiate(prefab);
+        return viewObj.GetComponent <LuDouGaoView>();
+    }
+
     static MainGameModel mainGameModel = null;
     public static IMainGameModel MainGameModel {
         get

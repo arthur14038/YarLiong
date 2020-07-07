@@ -20,6 +20,8 @@ namespace YarLiong.View
 
         public IEnumerator Show(string tips)
         {
+            base.Show();
+
             m_LoadingText.color = mTextColor;
 
             var doText = m_LoadingText.DOText(tips, 3f).Play();
@@ -32,6 +34,8 @@ namespace YarLiong.View
             yield return doFade.WaitForCompletion();
 
             base.Hide();
+
+            m_LoadingText.text = string.Empty;
         }
 
         public override IEnumerator Init()
