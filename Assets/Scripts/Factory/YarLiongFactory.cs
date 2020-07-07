@@ -34,6 +34,13 @@ public class YarLiongFactory
         return viewObj.GetComponent<CheePonView>();
     }
 
+    public static IGaoZhiView GetGaoZhiView()
+    {
+        var prefab = Resources.Load<GameObject>("Prefabs/GaoZhiCanvas");
+        var viewObj = GameObject.Instantiate(prefab);
+        return viewObj.GetComponent<GaoZhiView>();
+    }
+
     static MainGameModel mainGameModel = null;
     public static IMainGameModel MainGameModel {
         get

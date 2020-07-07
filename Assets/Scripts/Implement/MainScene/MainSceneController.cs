@@ -3,7 +3,7 @@ using YarLiong.Controller;
 using YarLiong.View;
 using UnityEngine;
 
-public class MainSceneController : AbstractSceneController, IMainSceneListener, ICheePonListener
+public class MainSceneController : AbstractSceneController, IMainSceneListener, ICheePonListener, IGaoZhiListener
 {
     IMainSceneView mMainSceneView = null;
     ICheePonView mCheePonView = null;
@@ -22,6 +22,12 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener, 
         if (mCheePonView != null)
             yield return StartCoroutine(mCheePonView.Init());
 
+        mGaoZhiView = YarLiongFactory.GetGaoZhiView();
+        mGaoZhiView.SetListener(this);
+        if (mGaoZhiView != null)
+            yield return StartCoroutine(mGaoZhiView.Init());
+
+        mGaoZhiView?.Hide();
         mCheePonView?.Hide();
         mMainSceneView?.Show();
     }
@@ -32,6 +38,10 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener, 
         {
             case ViewPage.CheePon:
                 mCheePonView?.Hide();
+                mMainSceneView?.Show();
+                break;
+            case ViewPage.GaoZhi:
+                mGaoZhiView?.Hide();
                 mMainSceneView?.Show();
                 break;
         }
