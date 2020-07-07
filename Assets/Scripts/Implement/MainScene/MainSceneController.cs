@@ -2,6 +2,7 @@
 using YarLiong.Controller;
 using YarLiong.View;
 using UnityEngine;
+using YarLiong.Model;
 
 public class MainSceneController : AbstractSceneController, IMainSceneListener, ICheePonListener, IGaoZhiListener
 {
@@ -63,5 +64,10 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener, 
     {
         mMainSceneView?.Hide();
         mLuDouGaoView?.Show();
+    }
+
+    public void OnClickGame(CheePonGameType gameType)
+    {
+        Debug.LogFormat("OnClickGame gameType: {0}", gameType);
     }
 }
