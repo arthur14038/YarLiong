@@ -12,5 +12,6 @@ namespace YarLiong.Model
     public interface ICheePonGameModel
     {
         CheePonGameType CurrentCheePonGameType { get; set; }
+
     }
 }
