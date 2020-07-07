@@ -6,6 +6,9 @@ using UnityEngine;
 public class MainSceneController : AbstractSceneController, IMainSceneListener
 {
     IMainSceneView mMainSceneView = null;
+    ICheePonView mCheePonView = null;
+    IGaoZhiView mGaoZhiView = null;
+    ILuDouGaoView mLuDouGaoView = null;
 
     public override IEnumerator Init()
     {
