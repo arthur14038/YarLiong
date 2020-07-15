@@ -3,6 +3,7 @@
     public class TetrisGrid : IGrid
     {
         BlockNode[,] mAllNodes;
+        public BlockNode[,] AllNodes { get { return mAllNodes; } }
 
         public TetrisGrid(int width, int height)
         {
@@ -27,11 +28,16 @@
         public INode[] GetRowNodes(int y)
         {
             Node[] rowNodes = new Node[Width];
-            for(int i = 0; i < Width; i++)
+            for (int i = 0; i < Width; i++)
             {
                 rowNodes[i] = mAllNodes[i, y];
             }
             return rowNodes;
+        }
+
+        public BlockNode GetNode(int x, int y)
+        {
+            return mAllNodes[x, y];
         }
     }
 }
