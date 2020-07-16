@@ -1,43 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using YarLiong.Model;
 
-public class CheePon : ICheePon
+namespace YarLiong.Model
 {
-    public CheePon(int width, int height)
+    public class CheePon : ICheePon
     {
-        mAllNodes = new Node[width,height];
-        for (int i = 0; i < width; ++i)
-            for (int j = 0; j < height; ++j)
-                mAllNodes[i, j] = new Node(i, j);
+        public CheePon(int width, int height)
+        {
+            mAllNodes = new Node[width, height];
+            for (int i = 0; i < width; ++i)
+                for (int j = 0; j < height; ++j)
+                    mAllNodes[i, j] = new Node(i, j);
 
-        Width = width;
-        Height = height;
-    }
+            Width = width;
+            Height = height;
+        }
 
-    Node[,] mAllNodes = null;
+        Node[,] mAllNodes = null;
 
-    public int Width { get; private set; }
-    public int Height { get; private set; }
+        public int Width { get; protected set; }
+        public int Height { get; protected set; }
+        public virtual INode[] AllNodes => throw new System.NotImplementedException();
 
-    public INode[] GetColumnNodes(int x)
-    {
-        throw new System.NotImplementedException();
-    }
+        public virtual INode[] GetColumnNodes(int x)
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public INode[] GetLeftObliqueNodes(int x, int y)
-    {
-        throw new System.NotImplementedException();
-    }
+        public virtual INode[] GetLeftObliqueNodes(int x, int y)
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public INode[] GetRightObliqueNodes(int x, int y)
-    {
-        throw new System.NotImplementedException();
-    }
+        public virtual INode[] GetRightObliqueNodes(int x, int y)
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public INode[] GetRowNodes(int y)
-    {
-        throw new System.NotImplementedException();
+        public virtual INode[] GetRowNodes(int y)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

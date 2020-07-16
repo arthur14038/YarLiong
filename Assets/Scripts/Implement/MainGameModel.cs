@@ -16,6 +16,4 @@ public class MainGameModel : IMainGameModel, ICheePonGameModel
     {
         return loadingTips[Random.Range(0, loadingTips.Length)];
     }
-
-
 }

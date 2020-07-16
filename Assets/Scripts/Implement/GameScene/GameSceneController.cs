@@ -5,11 +5,13 @@ using YarLiong.Controller;
 
 public class GameSceneController : AbstractSceneController
 {
-    
-
     public override IEnumerator Init()
     {
-        Debug.LogFormat("GameSceneController Init CurrentCheePonGameType: {0}", YarLiongFactory.CheePonGameModel.CurrentCheePonGameType);
-        yield return null;
+        var gameType = YarLiongFactory.CheePonGameModel.CurrentCheePonGameType;
+        var gameView = YarLiongFactory.GetCheePonGameView(gameType);
+        var gameController = YarLiongFactory.GetCheePonController(gameType);
+        yield return StartCoroutine(gameView.Init());
+        yield return StartCoroutine(gameController.Init());
+        gameController.SetView(gameView);
     }
 }

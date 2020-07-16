@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using YarLiong.Model;
 
-public class Node : INode
+namespace YarLiong.Model
 {
-    public Node(int x, int y)
+    public class Node : INode
     {
-        X = x;
-        Y = y;
-    }
+        public Node(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
 
-    public int X { get; private set; }
-    public int Y { get; private set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
+    }
 }

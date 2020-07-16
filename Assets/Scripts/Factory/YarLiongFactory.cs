@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YarLiong.Controller;
 using YarLiong.Model;
 using YarLiong.View;
 
@@ -45,7 +46,31 @@ public class YarLiongFactory
     {
         var prefab = Resources.Load<GameObject>("Prefabs/LuDouGaoCanvas");
         var viewObj = GameObject.Instantiate(prefab);
-        return viewObj.GetComponent <LuDouGaoView>();
+        return viewObj.GetComponent<LuDouGaoView>();
+    }
+
+    public static ICheePonGameView GetCheePonGameView(CheePonGameType cheePonGameType)
+    {
+        switch (cheePonGameType)
+        {
+            case CheePonGameType.Gomoku:
+                var prefab = Resources.Load<GameObject>("Prefabs/CheePonGameCanvas");
+                var viewObj = GameObject.Instantiate(prefab);
+                return viewObj.GetComponent<GomokuGameView>();
+            default:
+                return null;
+        }
+    }
+
+    public static ICheePonController GetCheePonController(CheePonGameType cheePonGameType)
+    {
+        switch (cheePonGameType)
+        {
+            case CheePonGameType.Gomoku:
+                return new GomokuLogic();
+            default:
+                return null;
+        }
     }
 
     static MainGameModel mainGameModel = null;
@@ -67,6 +92,4 @@ public class YarLiongFactory
             return mainGameModel;
         }
     }
-
-
 }
