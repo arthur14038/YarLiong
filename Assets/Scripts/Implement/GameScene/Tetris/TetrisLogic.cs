@@ -53,10 +53,12 @@ namespace YarLiong
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 //右移
+                MoveRigth();
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 //左移
+                MoveLeft();
             }
         }
 
@@ -159,14 +161,58 @@ namespace YarLiong
             mBlockGroup = newBlocks;
         }
 
-        private void MoceRigth()
+        private void MoveRigth()
         {
+            Debug.Log("MoveRigth");
+            var pattern = mBlockGroup[0].Pattern;
 
+            var newBlocks = new BlockNode[4];
+
+            for (int i = 0; i < mBlockGroup.Length; i++)
+            {
+                var newBlock = mTetrisGrid.GetNode(mBlockGroup[i].X + 1, mBlockGroup[i].Y);
+
+                if (newBlock == null)
+                {
+                    Debug.LogWarning("Can't move right");
+                    return;
+                }
+
+                newBlocks[i] = newBlock;
+            }
+
+            var oldBlocks = mBlockGroup;
+            SetBlockPattern(oldBlocks, BlockNode.BlockPattern.None);
+
+            SetBlockPattern(newBlocks, pattern);
+            mBlockGroup = newBlocks;
         }
 
         private void MoveLeft()
         {
+            Debug.Log("MoveLeft");
+            var pattern = mBlockGroup[0].Pattern;
 
+            var newBlocks = new BlockNode[4];
+
+            for (int i = 0; i < mBlockGroup.Length; i++)
+            {
+                var newBlock = mTetrisGrid.GetNode(mBlockGroup[i].X - 1, mBlockGroup[i].Y);
+
+                if (newBlock == null)
+                {
+                    Debug.LogWarning("Can't move left");
+                    return;
+                }
+
+                newBlocks[i] = newBlock;
+            }
+
+            var oldBlocks = mBlockGroup;
+            SetBlockPattern(oldBlocks, BlockNode.BlockPattern.None);
+
+            SetBlockPattern(newBlocks, pattern);
+            mBlockGroup = newBlocks;
         }
 
         #endregion
