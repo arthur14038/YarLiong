@@ -42,5 +42,21 @@
 
             return null;
         }
+
+        public bool IsInBound(BlockNode blockNode)
+        {
+            if (blockNode.X >= 0 && blockNode.Y >= 0 && blockNode.X < mAllNodes.GetLength(0) && blockNode.Y < mAllNodes.GetLength(1))
+                return true;
+
+            return false;
+        }
+
+        public bool IsGround(BlockNode blockNode)
+        {
+            if (blockNode.Y == mAllNodes.GetLength(1) - 1)
+                return true;
+
+            return false;
+        }
     }
 }

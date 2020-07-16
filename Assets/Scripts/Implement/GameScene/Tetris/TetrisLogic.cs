@@ -17,7 +17,10 @@ namespace YarLiong
 
         TetrisGrid mTetrisGrid;
 
-        BlockNode[] mBlockGroup = new BlockNode[4];
+        BlockNode[] mBlockGroup = null;
+
+        float mFallDownTime = 0.5f;
+        float mTimer = 0f;
 
         private void Start()
         {
@@ -60,6 +63,19 @@ namespace YarLiong
                 //左移
                 MoveLeft();
             }
+
+            if (mTimer < mFallDownTime)
+            {
+                mTimer += Time.deltaTime;
+            }
+            else
+            {
+                if (mBlockGroup == null)
+                    CreateNewPattern();
+                else
+                    MoveDown();
+                mTimer = 0f;
+            }
         }
 
         #region 生成方塊
@@ -69,7 +85,7 @@ namespace YarLiong
             //有7種型態
             var pattern = (BlockNode.BlockPattern)Random.Range(1, 8);
             mBlockGroup = GetBlockGroup(pattern);
-            SetBlockPattern(mBlockGroup, pattern);
+            SetBlocksPattern(mBlockGroup, pattern);
 
             Debug.Log("pattern = " + pattern);
         }
@@ -130,39 +146,53 @@ namespace YarLiong
         
         #endregion
 
-
-
         #region 方塊移動
 
         private void MoveDown()
         {
+            if (mBlockGroup == null)
+                return;
+
             Debug.Log("MoveDown");
             var pattern = mBlockGroup[0].Pattern;
 
             var newBlocks = new BlockNode[4];
 
+            var isGround = false;
+
             for (int i = 0; i < mBlockGroup.Length; i++)
             {
-                var newBlock = mTetrisGrid.GetNode(mBlockGroup[i].X, mBlockGroup[i].Y + 1);
-
-                if (newBlock == null)
+                //檢查是否觸底
+                if (mTetrisGrid.IsGround(mBlockGroup[i]))
                 {
+                    isGround = true;
                     Debug.LogWarning("Can't move down");
-                    return;
+                    break;
                 }
 
-                newBlocks[i] = newBlock;
+                newBlocks[i] = mTetrisGrid.GetNode(mBlockGroup[i].X, mBlockGroup[i].Y + 1);
             }
 
-            var oldBlocks = mBlockGroup;
-            SetBlockPattern(oldBlocks, BlockNode.BlockPattern.None);
+            if (isGround)
+            {
+                SetBlocksType(mBlockGroup, BlockNode.BlockType.Stuck);
+                mBlockGroup = null;
+            }
+            else
+            {
+                var oldBlocks = mBlockGroup;
+                ClearBlockStatus(oldBlocks);
 
-            SetBlockPattern(newBlocks, pattern);
-            mBlockGroup = newBlocks;
+                SetBlocksPattern(newBlocks, pattern);
+                mBlockGroup = newBlocks;
+            }
         }
 
         private void MoveRigth()
         {
+            if (mBlockGroup == null)
+                return;
+
             Debug.Log("MoveRigth");
             var pattern = mBlockGroup[0].Pattern;
 
@@ -182,14 +212,18 @@ namespace YarLiong
             }
 
             var oldBlocks = mBlockGroup;
-            SetBlockPattern(oldBlocks, BlockNode.BlockPattern.None);
+            ClearBlockStatus(oldBlocks);
 
-            SetBlockPattern(newBlocks, pattern);
+
+            SetBlocksPattern(newBlocks, pattern);
             mBlockGroup = newBlocks;
         }
 
         private void MoveLeft()
         {
+            if (mBlockGroup == null)
+                return;
+
             Debug.Log("MoveLeft");
             var pattern = mBlockGroup[0].Pattern;
 
@@ -209,19 +243,38 @@ namespace YarLiong
             }
 
             var oldBlocks = mBlockGroup;
-            SetBlockPattern(oldBlocks, BlockNode.BlockPattern.None);
+            ClearBlockStatus(oldBlocks);
 
-            SetBlockPattern(newBlocks, pattern);
+            SetBlocksPattern(newBlocks, pattern);
             mBlockGroup = newBlocks;
         }
 
         #endregion
 
-        private void SetBlockPattern(BlockNode[] blockNodes, BlockNode.BlockPattern blockPattern)
+        private void SetBlocksPattern(BlockNode[] blockNodes, BlockNode.BlockPattern blockPattern)
         {
             for (int i = 0; i < blockNodes.Length; i++)
             {
                 blockNodes[i].SetBlockPattern(blockPattern);
+            }
+
+            m_GridView.SetBlockView(blockNodes);
+        }
+
+        private void SetBlocksType(BlockNode[] blockNodes, BlockNode.BlockType blockType)
+        {
+            for (int i = 0; i < blockNodes.Length; i++)
+            {
+                blockNodes[i].SetBlockType(blockType);
+            }
+        }
+
+        private void ClearBlockStatus(BlockNode[] blockNodes)
+        {
+            for (int i = 0; i < blockNodes.Length; i++)
+            {
+                blockNodes[i].SetBlockPattern(BlockNode.BlockPattern.None);
+                blockNodes[i].SetBlockType(BlockNode.BlockType.None);
             }
 
             m_GridView.SetBlockView(blockNodes);
