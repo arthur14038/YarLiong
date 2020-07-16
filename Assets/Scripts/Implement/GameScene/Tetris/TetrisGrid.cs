@@ -37,7 +37,10 @@
 
         public BlockNode GetNode(int x, int y)
         {
-            return mAllNodes[x, y];
+            if (x >= 0 && y >= 0 && x < mAllNodes.GetLength(0) && y < mAllNodes.GetLength(1))
+                return mAllNodes[x, y];
+
+            return null;
         }
     }
 }

@@ -40,15 +40,34 @@ namespace YarLiong
             {
                 CreateNewPattern();
             }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                //旋轉
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                //下墜
+                MoveDown();
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                //右移
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                //左移
+            }
         }
+
+        #region 生成方塊
 
         private void CreateNewPattern()
         {
             //有7種型態
             var pattern = (BlockNode.BlockPattern)Random.Range(1, 8);
             mBlockGroup = GetBlockGroup(pattern);
-            mBlockGroup = GetBlockGroup(pattern);
-            SetBlockPattern(pattern);
+            SetBlockPattern(mBlockGroup, pattern);
 
             Debug.Log("pattern = " + pattern);
         }
@@ -106,14 +125,60 @@ namespace YarLiong
             return blockGroup;
         }
 
-        private void SetBlockPattern(BlockNode.BlockPattern blockPattern)
+        
+        #endregion
+
+
+
+        #region 方塊移動
+
+        private void MoveDown()
         {
+            Debug.Log("MoveDown");
+            var pattern = mBlockGroup[0].Pattern;
+
+            var newBlocks = new BlockNode[4];
+
             for (int i = 0; i < mBlockGroup.Length; i++)
             {
-                mBlockGroup[i].SetBlockPattern(blockPattern);
+                var newBlock = mTetrisGrid.GetNode(mBlockGroup[i].X, mBlockGroup[i].Y + 1);
+
+                if (newBlock == null)
+                {
+                    Debug.LogWarning("Can't move down");
+                    return;
+                }
+
+                newBlocks[i] = newBlock;
             }
 
-            m_GridView.SetBlockView(mBlockGroup);
+            var oldBlocks = mBlockGroup;
+            SetBlockPattern(oldBlocks, BlockNode.BlockPattern.None);
+
+            SetBlockPattern(newBlocks, pattern);
+            mBlockGroup = newBlocks;
+        }
+
+        private void MoceRigth()
+        {
+
+        }
+
+        private void MoveLeft()
+        {
+
+        }
+
+        #endregion
+
+        private void SetBlockPattern(BlockNode[] blockNodes, BlockNode.BlockPattern blockPattern)
+        {
+            for (int i = 0; i < blockNodes.Length; i++)
+            {
+                blockNodes[i].SetBlockPattern(blockPattern);
+            }
+
+            m_GridView.SetBlockView(blockNodes);
         }
 
     }
