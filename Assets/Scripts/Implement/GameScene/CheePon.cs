@@ -17,11 +17,11 @@ namespace YarLiong.Model
             Height = height;
         }
 
-        Node[,] mAllNodes = null;
+        protected Node[,] mAllNodes = null;
 
         public int Width { get; protected set; }
         public int Height { get; protected set; }
-        public virtual INode[] AllNodes => throw new System.NotImplementedException();
+        public virtual INode[,] AllNodes => throw new System.NotImplementedException();
 
         public virtual INode[] GetColumnNodes(int x)
         {
@@ -39,6 +39,11 @@ namespace YarLiong.Model
         }
 
         public virtual INode[] GetRowNodes(int y)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual INode GetCertainNode(int x, int y)
         {
             throw new System.NotImplementedException();
         }

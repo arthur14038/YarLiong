@@ -8,6 +8,8 @@ namespace YarLiong.View
 {
     public interface ICheePonGameView: IView
     {
-        void SetCheePon(CheePon cheePonData, ICheePonNodeListener cheePonNodeListener);
+        void SetCheePon(ICheePon cheePonData, ICheePonNodeListener cheePonNodeListener);
+
+        void UpdateNodeData(INode nodeData);
     }
 }
