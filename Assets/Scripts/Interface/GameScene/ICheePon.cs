@@ -8,6 +8,7 @@ namespace YarLiong.Model
     {
         int Width { get; }
         int Height { get; }
+        INode[] AllNodes { get; }
 
         INode[] GetRowNodes(int y);
 
