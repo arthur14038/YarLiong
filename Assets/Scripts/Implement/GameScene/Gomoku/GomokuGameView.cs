@@ -14,27 +14,33 @@ public class GomokuGameView : AbstractView, ICheePonGameView
     GridLayoutGroup m_GridLayoutGroup;
     [SerializeField]
     GomokuNodeView m_GomokuNodeView;
-    CheePon mCheePonData;
-    List<GomokuNodeView> mAllNodeView;
+    GomokuCheePon mCheePonData;
+    GomokuNodeView[,] mAllNodeView;
 
     public override IEnumerator Init()
     {
         m_GomokuNodeView.gameObject.SetActive(false);
-        mAllNodeView = new List<GomokuNodeView>();
         yield return null;
     }
 
-    public void SetCheePon(CheePon cheePonData, ICheePonNodeListener cheePonNodeListener)
+    public void SetCheePon(ICheePon cheePonData, ICheePonNodeListener cheePonNodeListener)
     {
-        mCheePonData = cheePonData;
+        mCheePonData = cheePonData as GomokuCheePon;
         var allNodes = mCheePonData.AllNodes;
-        for (int i = 0; i < allNodes.Length; ++i)
-        {
-            var nodeView = Instantiate(m_GomokuNodeView, m_GridLayoutGroup.transform);
-            mAllNodeView.Add(nodeView);
-            nodeView.SetNode(allNodes[i]);
-            nodeView.SetListener(cheePonNodeListener);
-            nodeView.gameObject.SetActive(true);
-        }
+        mAllNodeView = new GomokuNodeView[allNodes.GetLength(0), allNodes.GetLength(1)];
+        for (int j = 0; j < allNodes.GetLength(1); ++j)
+            for (int i = 0; i < allNodes.GetLength(0); ++i)
+            {
+                var nodeView = Instantiate(m_GomokuNodeView, m_GridLayoutGroup.transform);
+                nodeView.SetNode(allNodes[i, j]);
+                nodeView.SetListener(cheePonNodeListener);
+                nodeView.gameObject.SetActive(true);
+                mAllNodeView[i, j] = nodeView;
+            }
+    }
+
+    public void UpdateNodeData(INode nodeData)
+    {
+        mAllNodeView[nodeData.X, nodeData.Y].SetNode(nodeData);
     }
 }

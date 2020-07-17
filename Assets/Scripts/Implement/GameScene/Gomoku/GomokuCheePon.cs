@@ -6,19 +6,22 @@ namespace YarLiong.Model
 {
     public class GomokuCheePon : CheePon
     {
-        List<GomokuNode> mAllGomokuNodes;
-
         public GomokuCheePon(int width, int height) : base(width, height)
         {
-            mAllGomokuNodes = new List<GomokuNode>();
-            for (int i = 0; i < height; ++i)
-                for (int j = 0; j < width; ++j)
-                    mAllGomokuNodes.Add(new GomokuNode(j, i, width, height));
+            mAllNodes = new Node[width, height];
+            for (int i = 0; i < width; ++i)
+                for (int j = 0; j < height; ++j)
+                    mAllNodes[i, j] = new GomokuNode(i, j, width, height);
 
             Width = width;
             Height = height;
         }
 
-        public override INode[] AllNodes => mAllGomokuNodes.ToArray();
+        public override INode[,] AllNodes => mAllNodes;
+
+        public override INode GetCertainNode(int x, int y)
+        {
+            return mAllNodes[x, y];
+        }
     }
 }

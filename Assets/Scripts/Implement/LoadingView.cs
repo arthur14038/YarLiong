@@ -12,6 +12,13 @@ namespace YarLiong.View
         private Text m_LoadingText = null;
 
         private Color mTextColor = new Color(0f, 0f, 0f, 1f);
+#if UNITY_EDITOR
+        float mTextTime = 0f;
+        float mHideTime = 0f;
+#else
+        float mTextTime = 3f;
+        float mHideTime = 1f;
+#endif
 
         private void Awake()
         {
@@ -24,13 +31,13 @@ namespace YarLiong.View
 
             m_LoadingText.color = mTextColor;
 
-            var doText = m_LoadingText.DOText(tips, 3f).Play();
+            var doText = m_LoadingText.DOText(tips, mTextTime).Play();
             yield return doText.WaitForCompletion();
         }
 
         public new IEnumerator Hide()
         {
-            var doFade = m_LoadingText.DOFade(0f, 1f).Play();
+            var doFade = m_LoadingText.DOFade(0f, mHideTime).Play();
             yield return doFade.WaitForCompletion();
 
             base.Hide();

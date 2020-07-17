@@ -16,9 +16,17 @@ namespace YarLiong.Model
         All = Up | Down | Right | Left,
     }
 
+    public enum GomokuNodeState
+    {
+        Empty,
+        Black,
+        White,
+    }
+
     public class GomokuNode : Node
     {
         public GomokuNodeFlags ThisNodeFlags;
+        public GomokuNodeState CurrentGomokuNodeState;
 
         public GomokuNode(int x, int y, int width, int height) : base(x, y)
         {
@@ -31,6 +39,8 @@ namespace YarLiong.Model
                 ThisNodeFlags |= GomokuNodeFlags.Up;
             if (y != height - 1)
                 ThisNodeFlags |= GomokuNodeFlags.Down;
+
+            CurrentGomokuNodeState = GomokuNodeState.Empty;
         }
     }
 }

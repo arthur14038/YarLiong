@@ -17,6 +17,8 @@ public class GomokuNodeView : MonoBehaviour, ICheePonNodeView, IPointerClickHand
     Image m_ImageRight;
     [SerializeField]
     Image m_ImageLeft;
+    [SerializeField]
+    Image m_ImageChess;
 
     ICheePonNodeListener mCheePonNodeListener;
     GomokuNode mNodeData;
@@ -38,5 +40,8 @@ public class GomokuNodeView : MonoBehaviour, ICheePonNodeView, IPointerClickHand
         m_ImageDown.enabled = mNodeData.ThisNodeFlags.HasFlag(GomokuNodeFlags.Down);
         m_ImageRight.enabled = mNodeData.ThisNodeFlags.HasFlag(GomokuNodeFlags.Right);
         m_ImageLeft.enabled = mNodeData.ThisNodeFlags.HasFlag(GomokuNodeFlags.Left);
+
+        m_ImageChess.enabled = mNodeData.CurrentGomokuNodeState != GomokuNodeState.Empty;
+        m_ImageChess.color = mNodeData.CurrentGomokuNodeState == GomokuNodeState.Black ? Color.black : Color.white;
     }
 }
