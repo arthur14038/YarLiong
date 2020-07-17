@@ -51,11 +51,44 @@
             return false;
         }
 
-        public bool IsGround(BlockNode blockNode)
+        /// <summary>
+        /// 方塊是否觸底
+        /// </summary>
+        public bool IsGround(BlockNode[] blockNodes)
         {
-            if (blockNode.Y == mAllNodes.GetLength(1) - 1)
-                return true;
+            for(int i = 0; i < blockNodes.Length; i++)
+            {
+                if (blockNodes[i].Y == mAllNodes.GetLength(1) - 1)
+                    return true;
+            }
+            return false;
+        }
 
+        /// <summary>
+        /// 是否被方塊擋住(下一格是否有方塊)
+        /// </summary>
+        public bool IsBlock(BlockNode[] blockNodes, int direction)
+        {
+            for (int i = 0; i < blockNodes.Length; i++)
+            {
+                //取得下一格的方塊
+                BlockNode block = null;
+                switch (direction)
+                {
+                    case 0:
+                        block = GetNode(blockNodes[i].X, blockNodes[i].Y + 1);
+                        break;
+                    case 1:
+                        block = GetNode(blockNodes[i].X + 1, blockNodes[i].Y);
+                        break;
+                    case 2:
+                        block = GetNode(blockNodes[i].X - 1, blockNodes[i].Y);
+                        break;
+                }
+
+                if (block != null && block.Type == BlockNode.BlockType.Stuck)
+                    return true;
+            }
             return false;
         }
     }

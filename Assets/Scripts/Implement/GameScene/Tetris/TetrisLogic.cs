@@ -9,6 +9,13 @@ namespace YarLiong
 {
     public class TetrisLogic : MonoBehaviour, IController
     {
+        public enum MoveDirection
+        {
+            Down = 0,
+            Right = 1,
+            Left = 2,
+        }
+
         const int WIDTH = 10;
         const int HEIGHT = 20;
 
@@ -158,30 +165,23 @@ namespace YarLiong
 
             var newBlocks = new BlockNode[4];
 
-            var isGround = false;
-
-            for (int i = 0; i < mBlockGroup.Length; i++)
-            {
-                //檢查是否觸底
-                if (mTetrisGrid.IsGround(mBlockGroup[i]))
-                {
-                    isGround = true;
-                    Debug.LogWarning("Can't move down");
-                    break;
-                }
-
-                newBlocks[i] = mTetrisGrid.GetNode(mBlockGroup[i].X, mBlockGroup[i].Y + 1);
-            }
-
-            if (isGround)
+            //觸底或是下方有別的方塊
+            if (mTetrisGrid.IsGround(mBlockGroup) || mTetrisGrid.IsBlock(mBlockGroup, (int)MoveDirection.Down))
             {
                 SetBlocksType(mBlockGroup, BlockNode.BlockType.Stuck);
                 mBlockGroup = null;
+
+                Debug.LogWarning("Can't move down");
             }
             else
             {
                 var oldBlocks = mBlockGroup;
                 ClearBlockStatus(oldBlocks);
+
+                for (int i = 0; i < mBlockGroup.Length; i++)
+                {
+                    newBlocks[i] = mTetrisGrid.GetNode(mBlockGroup[i].X, mBlockGroup[i].Y + 1);
+                }
 
                 SetBlocksPattern(newBlocks, pattern);
                 mBlockGroup = newBlocks;
@@ -192,6 +192,12 @@ namespace YarLiong
         {
             if (mBlockGroup == null)
                 return;
+
+            if (mTetrisGrid.IsBlock(mBlockGroup, (int)MoveDirection.Right))
+            {
+                Debug.LogWarning("Can't move right, is block");
+                return;
+            }
 
             Debug.Log("MoveRigth");
             var pattern = mBlockGroup[0].Pattern;
@@ -214,7 +220,6 @@ namespace YarLiong
             var oldBlocks = mBlockGroup;
             ClearBlockStatus(oldBlocks);
 
-
             SetBlocksPattern(newBlocks, pattern);
             mBlockGroup = newBlocks;
         }
@@ -223,6 +228,12 @@ namespace YarLiong
         {
             if (mBlockGroup == null)
                 return;
+
+            if (mTetrisGrid.IsBlock(mBlockGroup, (int)MoveDirection.Left))
+            {
+                Debug.LogWarning("Can't move left, is block");
+                return;
+            }
 
             Debug.Log("MoveLeft");
             var pattern = mBlockGroup[0].Pattern;
@@ -279,6 +290,5 @@ namespace YarLiong
 
             m_GridView.SetBlockView(blockNodes);
         }
-
     }
 }
