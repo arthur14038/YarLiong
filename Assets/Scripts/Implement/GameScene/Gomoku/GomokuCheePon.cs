@@ -17,11 +17,6 @@ namespace YarLiong.Model
             Height = height;
         }
 
-        public override INode[,] AllNodes => mAllNodes;
 
-        public override INode GetCertainNode(int x, int y)
-        {
-            return mAllNodes[x, y];
-        }
     }
 }

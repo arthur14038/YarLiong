@@ -14,6 +14,9 @@ public class GomokuGameView : AbstractView, ICheePonGameView
     GridLayoutGroup m_GridLayoutGroup;
     [SerializeField]
     GomokuNodeView m_GomokuNodeView;
+    [SerializeField]
+    Image m_ImageCurrentRound;
+
     GomokuCheePon mCheePonData;
     GomokuNodeView[,] mAllNodeView;
 
@@ -37,6 +40,11 @@ public class GomokuGameView : AbstractView, ICheePonGameView
                 nodeView.gameObject.SetActive(true);
                 mAllNodeView[i, j] = nodeView;
             }
+    }
+
+    public void SetRound(CheePonRound round)
+    {
+        m_ImageCurrentRound.color = round == CheePonRound.Black ? Color.black : Color.white;
     }
 
     public void UpdateNodeData(INode nodeData)

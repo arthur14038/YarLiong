@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using YarLiong.Controller;
@@ -11,5 +12,7 @@ namespace YarLiong.View
         void SetCheePon(ICheePon cheePonData, ICheePonNodeListener cheePonNodeListener);
 
         void UpdateNodeData(INode nodeData);
+
+        void SetRound(CheePonRound round);
     }
 }

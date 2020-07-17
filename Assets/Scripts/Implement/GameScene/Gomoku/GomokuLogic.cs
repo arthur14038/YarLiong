@@ -4,36 +4,30 @@ using UnityEngine;
 using YarLiong.Controller;
 using YarLiong.Model;
 using YarLiong.View;
+using static YarLiong.Controller.ICheePonController;
 
 public class GomokuLogic : ICheePonController, ICheePonNodeListener
 {
-    enum Round
-    {
-        White,
-        Black,
-    }
-
     ICheePonGameView mCheePonGameView = null;
     GomokuCheePon mGomokuCheePon = null;
-    Round mCurrentRound;
+    CheePonRound mCurrentRound;
 
     public IEnumerator Init()
     {
         mGomokuCheePon = new GomokuCheePon(15, 15);
-        mCurrentRound = Round.Black;
+        mCurrentRound = CheePonRound.Black;
         yield return null;
     }
 
     public void OnClickNode(int x, int y)
     {
-        var node = mGomokuCheePon.GetCertainNode(x, y) as GomokuNode;
+        var node = mGomokuCheePon.AllNodes[x, y] as GomokuNode;
         if(node.CurrentGomokuNodeState == GomokuNodeState.Empty)
         {
-            Debug.LogFormat("OnClickNode x: {0}, y: {1}, before CurrentGomokuNodeState: {2}", x, y, node.CurrentGomokuNodeState);
-            node.CurrentGomokuNodeState = mCurrentRound == Round.Black ? GomokuNodeState.Black : GomokuNodeState.White;
+            node.CurrentGomokuNodeState = mCurrentRound == CheePonRound.Black ? GomokuNodeState.Black : GomokuNodeState.White;
             mCheePonGameView.UpdateNodeData(node);
-            mCurrentRound = mCurrentRound == Round.Black ? Round.White : Round.Black;
-            Debug.LogFormat("OnClickNode x: {0}, y: {1}, after CurrentGomokuNodeState: {2}", x, y, node.CurrentGomokuNodeState);
+
+            CheckVictory(x, y);
         }
     }
 
@@ -41,6 +35,27 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener
     {
         mCheePonGameView = view;
         mCheePonGameView.SetCheePon(mGomokuCheePon, this);
+        mCheePonGameView.SetRound(mCurrentRound);
         mCheePonGameView.Show();
+    }
+
+    void CheckVictory(int x, int y)
+    {
+        var node = mGomokuCheePon.AllNodes[x, y] as GomokuNode;
+        Debug.LogFormat("CheckVictory x: {0}, y: {1}, CurrentGomokuNodeState: {2}, mCurrentRound: {3}", 
+            x, y, node.CurrentGomokuNodeState, mCurrentRound);
+
+        var checkColor = node.CurrentGomokuNodeState;
+        int connectCount = 1;
+        //檢查橫
+
+
+        NextRound();
+    }
+
+    void NextRound()
+    {
+        mCurrentRound = mCurrentRound == CheePonRound.Black ? CheePonRound.White : CheePonRound.Black;
+        mCheePonGameView.SetRound(mCurrentRound);
     }
 }
