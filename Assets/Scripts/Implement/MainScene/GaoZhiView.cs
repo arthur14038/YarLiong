@@ -18,7 +18,7 @@ public class GaoZhiView : AbstractView, IGaoZhiView
     public override IEnumerator Init()
     {
         m_EscapeButton.onClick.AddListener(() => { mGaoZhiListener.OnClickEscape(ViewPage.GaoZhi); });
-        m_SnakeButton.onClick.AddListener(() => { mGaoZhiListener.OnClickGame(GaoZhiGameType.Snake); });
+        m_SnakeButton.onClick.AddListener(() => { mGaoZhiListener.OnClickGame(GameType.Snake); });
         yield return null;
     }
 

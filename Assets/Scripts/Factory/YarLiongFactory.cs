@@ -49,11 +49,11 @@ public class YarLiongFactory
         return viewObj.GetComponent<LuDouGaoView>();
     }
 
-    public static ICheePonGameView GetCheePonGameView(CheePonGameType cheePonGameType)
+    public static ICheePonGameView GetCheePonGameView(GameType gameType)
     {
-        switch (cheePonGameType)
+        switch (gameType)
         {
-            case CheePonGameType.Gomoku:
+            case GameType.Gomoku:
                 var prefab = Resources.Load<GameObject>("Prefabs/CheePonGameCanvas");
                 var viewObj = GameObject.Instantiate(prefab);
                 return viewObj.GetComponent<GomokuGameView>();
@@ -69,11 +69,11 @@ public class YarLiongFactory
         return viewObj.GetComponent<GameSettingView>();
     }
 
-    public static ICheePonController GetCheePonController(CheePonGameType cheePonGameType)
+    public static ICheePonController GetCheePonController(GameType gameType)
     {
-        switch (cheePonGameType)
+        switch (gameType)
         {
-            case CheePonGameType.Gomoku:
+            case GameType.Gomoku:
                 return new GomokuLogic();
             default:
                 return null;
@@ -82,26 +82,6 @@ public class YarLiongFactory
 
     static MainGameModel mainGameModel = null;
     public static IMainGameModel MainGameModel {
-        get
-        {
-            if (mainGameModel == null)
-                mainGameModel = new MainGameModel();
-            return mainGameModel;
-        }
-    }
-
-    public static ICheePonGameModel CheePonGameModel
-    {
-        get
-        {
-            if (mainGameModel == null)
-                mainGameModel = new MainGameModel();
-            return mainGameModel;
-        }
-    }
-
-    public static IGaoZhiGameModel GaoZhiGameModel
-    {
         get
         {
             if (mainGameModel == null)

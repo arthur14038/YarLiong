@@ -7,6 +7,6 @@ namespace YarLiong.Controller
 {
     public interface IGaoZhiListener: IEscapeListener
     {
-        void OnClickGame(GaoZhiGameType gameType);
+        void OnClickGame(GameType gameType);
     }
 }

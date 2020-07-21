@@ -18,7 +18,7 @@ public class CheePonView : AbstractView, ICheePonView
     public override IEnumerator Init()
     {
         m_EscapeButton.onClick.AddListener(() => { mCheePonListener.OnClickEscape(ViewPage.CheePon); });
-        m_GomokuButton.onClick.AddListener(() => { mCheePonListener.OnClickGame(CheePonGameType.Gomoku); });
+        m_GomokuButton.onClick.AddListener(() => { mCheePonListener.OnClickGame(GameType.Gomoku); });
         yield return null;
     }
 

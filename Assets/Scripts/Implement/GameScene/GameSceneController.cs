@@ -11,7 +11,7 @@ public class GameSceneController : AbstractSceneController, IGameSettingListener
 
     public override IEnumerator Init()
     {
-        var gameType = YarLiongFactory.CheePonGameModel.CurrentCheePonGameType;
+        var gameType = YarLiongFactory.MainGameModel.CurrentGameType;
         var gameView = YarLiongFactory.GetCheePonGameView(gameType);
         mCheePonController = YarLiongFactory.GetCheePonController(gameType);
         mCheePonController.SetGameEndListener(this);
