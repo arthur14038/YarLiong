@@ -69,7 +69,7 @@ public class YarLiongFactory
         return viewObj.GetComponent<GameSettingView>();
     }
 
-    public static ICheePonController GetCheePonController(GameType gameType)
+    public static IGameController GetGameController(GameType gameType)
     {
         switch (gameType)
         {

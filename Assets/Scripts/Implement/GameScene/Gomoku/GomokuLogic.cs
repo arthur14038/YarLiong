@@ -5,7 +5,7 @@ using YarLiong.Controller;
 using YarLiong.Model;
 using YarLiong.View;
 
-public class GomokuLogic : ICheePonController, ICheePonNodeListener
+public class GomokuLogic : ICheePonController, ICheePonNodeListener, IGameBackListener
 {
     ICheePonGameView mCheePonGameView = null;
     GomokuCheePon mGomokuCheePon = null;
@@ -14,8 +14,15 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener
 
     public IEnumerator Init()
     {
+        mCheePonGameView = YarLiongFactory.GetCheePonGameView(GameType.Gomoku);
         mGomokuCheePon = new GomokuCheePon(15, 15);
-        yield return null;
+        mCheePonGameView.SetListener(this);
+        yield return mCheePonGameView.Init();
+    }
+
+    public void OnClickGameBack()
+    {
+        mGameEndListener.OnGameQuit();
     }
 
     public void OnClickNode(int x, int y)
@@ -33,11 +40,6 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener
     public void SetGameEndListener(IGameEndListener gameEndListener)
     {
         mGameEndListener = gameEndListener;
-    }
-
-    public void SetView(ICheePonGameView view)
-    {
-        mCheePonGameView = view;
     }
 
     public void StartGame()

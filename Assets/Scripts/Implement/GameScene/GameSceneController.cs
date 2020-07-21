@@ -4,21 +4,17 @@ using UnityEngine;
 using YarLiong.Controller;
 using YarLiong.View;
 
-public class GameSceneController : AbstractSceneController, IGameSettingListener, IGameEndListener, IGameBackListener
+public class GameSceneController : AbstractSceneController, IGameSettingListener, IGameEndListener
 {
     IGameSettingView mGameSettingView;
-    ICheePonController mCheePonController;
+    IGameController mGameController;
 
     public override IEnumerator Init()
     {
         var gameType = YarLiongFactory.MainGameModel.CurrentGameType;
-        var gameView = YarLiongFactory.GetCheePonGameView(gameType);
-        mCheePonController = YarLiongFactory.GetCheePonController(gameType);
-        mCheePonController.SetGameEndListener(this);
-        gameView.SetListener(this);
-        yield return StartCoroutine(gameView.Init());
-        yield return StartCoroutine(mCheePonController.Init());
-        mCheePonController.SetView(gameView);
+        mGameController = YarLiongFactory.GetGameController(gameType);
+        mGameController.SetGameEndListener(this);
+        yield return StartCoroutine(mGameController.Init());
 
         mGameSettingView = YarLiongFactory.GetGameSettingView();
         mGameSettingView.SetListener(this);
@@ -37,14 +33,9 @@ public class GameSceneController : AbstractSceneController, IGameSettingListener
         MainGameLogic.Instance.LoadScene(SceneName.MainScene);
     }
 
-    public void OnClickGameBack()
-    {
-        MainGameLogic.Instance.LoadScene(SceneName.MainScene);
-    }
-
     public void OnClickStart()
     {
-        mCheePonController.StartGame();
+        mGameController.StartGame();
         mGameSettingView.Hide();
     }
 
@@ -52,5 +43,10 @@ public class GameSceneController : AbstractSceneController, IGameSettingListener
     {
         mGameSettingView.Show();
         mGameSettingView.ShowGameEndView(msg);
+    }
+
+    public void OnGameQuit()
+    {
+        MainGameLogic.Instance.LoadScene(SceneName.MainScene);
     }
 }

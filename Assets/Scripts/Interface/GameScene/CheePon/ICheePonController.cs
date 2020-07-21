@@ -12,12 +12,7 @@ namespace YarLiong.Controller
         Black,
     }
 
-    public interface ICheePonController : IController
+    public interface ICheePonController : IGameController
     {
-        void SetGameEndListener(IGameEndListener gameEndListener);
-
-        void SetView(ICheePonGameView view);
-
-        void StartGame();
     }
 }

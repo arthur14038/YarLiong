@@ -7,5 +7,7 @@ namespace YarLiong.Controller
     public interface IGameEndListener
     {
         void OnGameEnd(string msg);
+
+        void OnGameQuit();
     }
 }
