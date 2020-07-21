@@ -39,32 +39,32 @@ namespace YarLiong.View
             }
         }
 
-        public void SetBlockColor(BlockNode.BlockPattern blockPattern)
+        public void SetBlockColor(BlockPattern.Pattern patternType)
         {
-            switch (blockPattern)
+            switch (patternType)
             {
-                case BlockNode.BlockPattern.None:
+                case BlockPattern.Pattern.None:
                     m_BlockImg.color = mNoneColor;
                     break;
-                case BlockNode.BlockPattern.S:
+                case BlockPattern.Pattern.S:
                     m_BlockImg.color = mPatternColor_S;
                     break;
-                case BlockNode.BlockPattern.Z:
+                case BlockPattern.Pattern.Z:
                     m_BlockImg.color = mPatternColor_Z;
                     break;
-                case BlockNode.BlockPattern.L:
+                case BlockPattern.Pattern.L:
                     m_BlockImg.color = mPatternColor_L;
                     break;
-                case BlockNode.BlockPattern.J:
+                case BlockPattern.Pattern.J:
                     m_BlockImg.color = mPatternColor_J;
                     break;
-                case BlockNode.BlockPattern.T:
+                case BlockPattern.Pattern.T:
                     m_BlockImg.color = mPatternColor_T;
                     break;
-                case BlockNode.BlockPattern.O:
+                case BlockPattern.Pattern.O:
                     m_BlockImg.color = mPatternColor_O;
                     break;
-                case BlockNode.BlockPattern.I:
+                case BlockPattern.Pattern.I:
                     m_BlockImg.color = mPatternColor_I;
                     break;
             }

@@ -43,10 +43,10 @@ namespace YarLiong.View
 
         public void SetBlockView(BlockNode[] blockNodes)
         {
-            for(int i = 0; i < blockNodes.Length; i++)
+            for (int i = 0; i < blockNodes.Length; i++)
             {
                 var block = blockNodes[i];
-                var pattern = block.Pattern;
+                var pattern = block.PatternType;
                 var blockView = mBlockViews[block.X, block.Y];
                 blockView.SetBlockColor(pattern);
             }

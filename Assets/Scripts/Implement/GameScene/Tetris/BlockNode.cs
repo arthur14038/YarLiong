@@ -9,28 +9,16 @@
             Stuck = 2,
         }
 
-        public enum BlockPattern
-        {
-            None,
-            S,
-            Z,
-            L,
-            J,
-            T,
-            O,
-            I,
-        }
-
         BlockType mBlockType = BlockType.None;
-        BlockPattern mBlockPattern = BlockPattern.None;
+        BlockPattern.Pattern mPatternType = BlockPattern.Pattern.None;
 
         public BlockType Type { get { return mBlockType; } }
-        public BlockPattern Pattern { get { return mBlockPattern; } }
+        public BlockPattern.Pattern PatternType { get { return mPatternType; } }
 
         public BlockNode(int x, int y) : base(x, y)
         {
             mBlockType = BlockType.None;
-            mBlockPattern = BlockPattern.None;
+            mPatternType = BlockPattern.Pattern.None;
         }
 
         public void SetBlockType(BlockType blockType)
@@ -38,9 +26,9 @@
             mBlockType = blockType;
         }
 
-        public void SetBlockPattern(BlockPattern blockPattern)
+        public void SetBlockPattern(BlockPattern.Pattern blockPattern)
         {
-            mBlockPattern = blockPattern;
+            mPatternType = blockPattern;
         }
     }
 }
