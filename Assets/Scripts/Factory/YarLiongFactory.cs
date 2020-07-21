@@ -51,12 +51,18 @@ public class YarLiongFactory
 
     public static IGameView GetGameView(GameType gameType)
     {
+        GameObject prefab;
+        GameObject viewObj;
         switch (gameType)
         {
             case GameType.Gomoku:
-                var prefab = Resources.Load<GameObject>("Prefabs/CheePonGameCanvas");
-                var viewObj = GameObject.Instantiate(prefab);
+                prefab = Resources.Load<GameObject>("Prefabs/CheePonGameCanvas");
+                viewObj = GameObject.Instantiate(prefab);
                 return viewObj.GetComponent<GomokuGameView>();
+            case GameType.Snake:
+                prefab = Resources.Load<GameObject>("Prefabs/SnakeGameCanvas");
+                viewObj = GameObject.Instantiate(prefab);
+                return viewObj.GetComponent<SnakeGameView>();
             default:
                 return null;
         }
@@ -75,6 +81,8 @@ public class YarLiongFactory
         {
             case GameType.Gomoku:
                 return new GomokuLogic();
+            case GameType.Snake:
+                return new SnakeLogic();
             default:
                 return null;
         }

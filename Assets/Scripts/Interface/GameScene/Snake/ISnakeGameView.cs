@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace YarLiong.View
 {
-    public interface ISnakeGameView : IView
+    public interface ISnakeGameView : IGameView
     {
 
     }

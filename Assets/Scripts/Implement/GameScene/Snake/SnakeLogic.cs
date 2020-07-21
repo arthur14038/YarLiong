@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using YarLiong.Controller;
+using YarLiong.Model;
 using YarLiong.View;
 
 public class SnakeLogic : IGameController, IGameBackListener
@@ -11,7 +12,9 @@ public class SnakeLogic : IGameController, IGameBackListener
 
     public IEnumerator Init()
     {
-        throw new System.NotImplementedException();
+        mSnakeGameView = YarLiongFactory.GetGameView(GameType.Snake) as ISnakeGameView;
+        mSnakeGameView.SetListener(this);
+        yield return mSnakeGameView.Init();
     }
 
     public void OnClickGameBack()
