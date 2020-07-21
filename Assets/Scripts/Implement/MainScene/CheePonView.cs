@@ -9,9 +9,9 @@ using YarLiong.Model;
 public class CheePonView : AbstractView, ICheePonView
 {
     [SerializeField]
-    Button m_EscapeButton;
+    Button m_EscapeButton = null;
     [SerializeField]
-    Button m_GomokuButton;
+    Button m_GomokuButton = null;
 
     ICheePonListener mCheePonListener = null;
 

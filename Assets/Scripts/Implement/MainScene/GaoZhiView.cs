@@ -11,7 +11,7 @@ public class GaoZhiView : AbstractView, IGaoZhiView
     [SerializeField]
     Button m_EscapeButton = null;
     [SerializeField]
-    Button m_SnakeButton;
+    Button m_SnakeButton = null;
 
     IGaoZhiListener mGaoZhiListener = null;
 

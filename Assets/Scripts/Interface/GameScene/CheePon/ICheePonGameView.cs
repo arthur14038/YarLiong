@@ -7,10 +7,8 @@ using YarLiong.Model;
 
 namespace YarLiong.View
 {
-    public interface ICheePonGameView: IView
+    public interface ICheePonGameView: IGameView
     {
-        void SetListener(IGameBackListener listener);
-
         void SetCheePon(ICheePon cheePonData, ICheePonNodeListener cheePonNodeListener);
 
         void UpdateNodeData(INode nodeData);

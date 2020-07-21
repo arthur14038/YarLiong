@@ -9,15 +9,15 @@ using YarLiong.View;
 public class GomokuGameView : AbstractView, ICheePonGameView
 {
     [SerializeField]
-    Button m_BackButton;
+    Button m_BackButton = null;
     [SerializeField]
-    GridLayoutGroup m_GridLayoutGroup;
+    GridLayoutGroup m_GridLayoutGroup = null;
     [SerializeField]
-    GomokuNodeView m_GomokuNodeView;
+    GomokuNodeView m_GomokuNodeView = null;
     [SerializeField]
-    Image m_ImageCurrentRound;
+    Image m_ImageCurrentRound = null;
     [SerializeField]
-    RectTransform m_RoundRoot;
+    RectTransform m_RoundRoot = null;
 
     GomokuCheePon mCheePonData;
     GomokuNodeView[,] mAllNodeView;

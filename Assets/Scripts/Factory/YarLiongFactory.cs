@@ -49,7 +49,7 @@ public class YarLiongFactory
         return viewObj.GetComponent<LuDouGaoView>();
     }
 
-    public static ICheePonGameView GetCheePonGameView(GameType gameType)
+    public static IGameView GetGameView(GameType gameType)
     {
         switch (gameType)
         {

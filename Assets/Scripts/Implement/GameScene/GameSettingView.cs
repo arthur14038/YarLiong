@@ -8,17 +8,17 @@ using YarLiong.View;
 public class GameSettingView : AbstractView, IGameSettingView
 {
     [SerializeField]
-    RectTransform m_StartViewRoot;
+    RectTransform m_StartViewRoot = null;
     [SerializeField]
-    RectTransform m_EndViewRoot;
+    RectTransform m_EndViewRoot = null;
     [SerializeField]
-    Button m_StartButton;
+    Button m_StartButton = null;
     [SerializeField]
-    Button m_FinishButton;
+    Button m_FinishButton = null;
     [SerializeField]
-    Button m_AgainButton;
+    Button m_AgainButton = null;
     [SerializeField]
-    Text m_EndingMsgText;
+    Text m_EndingMsgText = null;
 
     IGameSettingListener mGameSettingListener;
 

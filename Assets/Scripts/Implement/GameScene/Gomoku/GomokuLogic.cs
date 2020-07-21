@@ -14,7 +14,7 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener, IGameBackLi
 
     public IEnumerator Init()
     {
-        mCheePonGameView = YarLiongFactory.GetCheePonGameView(GameType.Gomoku);
+        mCheePonGameView = YarLiongFactory.GetGameView(GameType.Gomoku) as ICheePonGameView;
         mGomokuCheePon = new GomokuCheePon(15, 15);
         mCheePonGameView.SetListener(this);
         yield return mCheePonGameView.Init();

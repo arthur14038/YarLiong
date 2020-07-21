@@ -10,15 +10,15 @@ using YarLiong.View;
 public class GomokuNodeView : MonoBehaviour, ICheePonNodeView, IPointerClickHandler
 {
     [SerializeField]
-    Image m_ImageUp;
+    Image m_ImageUp = null;
     [SerializeField]
-    Image m_ImageDown;
+    Image m_ImageDown = null;
     [SerializeField]
-    Image m_ImageRight;
+    Image m_ImageRight = null;
     [SerializeField]
-    Image m_ImageLeft;
+    Image m_ImageLeft = null;
     [SerializeField]
-    Image m_ImageChess;
+    Image m_ImageChess = null;
 
     ICheePonNodeListener mCheePonNodeListener;
     GomokuNode mNodeData;
