@@ -16,13 +16,23 @@ public class GomokuGameView : AbstractView, ICheePonGameView
     GomokuNodeView m_GomokuNodeView;
     [SerializeField]
     Image m_ImageCurrentRound;
+    [SerializeField]
+    RectTransform m_RoundRoot;
 
     GomokuCheePon mCheePonData;
     GomokuNodeView[,] mAllNodeView;
+    IGameBackListener mGameBackListener;
+
+    public void SetListener(IGameBackListener listener)
+    {
+        mGameBackListener = listener;
+    }
 
     public override IEnumerator Init()
     {
         m_GomokuNodeView.gameObject.SetActive(false);
+        m_RoundRoot.gameObject.SetActive(false);
+        m_BackButton.onClick.AddListener(() => { mGameBackListener?.OnClickGameBack(); });
         yield return null;
     }
 
@@ -30,21 +40,28 @@ public class GomokuGameView : AbstractView, ICheePonGameView
     {
         mCheePonData = cheePonData as GomokuCheePon;
         var allNodes = mCheePonData.AllNodes;
-        mAllNodeView = new GomokuNodeView[allNodes.GetLength(0), allNodes.GetLength(1)];
+
+        if(mAllNodeView == null)
+            mAllNodeView = new GomokuNodeView[allNodes.GetLength(0), allNodes.GetLength(1)];
+
         for (int j = 0; j < allNodes.GetLength(1); ++j)
             for (int i = 0; i < allNodes.GetLength(0); ++i)
             {
-                var nodeView = Instantiate(m_GomokuNodeView, m_GridLayoutGroup.transform);
-                nodeView.SetNode(allNodes[i, j]);
-                nodeView.SetListener(cheePonNodeListener);
-                nodeView.gameObject.SetActive(true);
-                mAllNodeView[i, j] = nodeView;
+                if(mAllNodeView[i, j] == null)
+                {
+                    var nodeView = Instantiate(m_GomokuNodeView, m_GridLayoutGroup.transform);
+                    mAllNodeView[i, j] = nodeView;
+                }
+                mAllNodeView[i, j].SetNode(allNodes[i, j]);
+                mAllNodeView[i, j].SetListener(cheePonNodeListener);
+                mAllNodeView[i, j].gameObject.SetActive(true);
             }
     }
 
     public void SetRound(CheePonRound round)
     {
         m_ImageCurrentRound.color = round == CheePonRound.Black ? Color.black : Color.white;
+        m_RoundRoot.gameObject.SetActive(true);
     }
 
     public void UpdateNodeData(INode nodeData)

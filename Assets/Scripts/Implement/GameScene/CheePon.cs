@@ -22,5 +22,10 @@ namespace YarLiong.Model
         public int Width { get; protected set; }
         public int Height { get; protected set; }
         public virtual INode[,] AllNodes => mAllNodes;
+
+        public virtual void ClearCheePon()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

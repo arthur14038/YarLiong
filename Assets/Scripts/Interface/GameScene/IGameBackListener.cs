@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace YarLiong.Controller
 {
-    public interface IGameStartListener
+    public interface IGameBackListener
     {
-        void OnClickStart();
+        void OnClickGameBack();
     }
 }

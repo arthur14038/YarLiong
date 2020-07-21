@@ -17,6 +17,13 @@ namespace YarLiong.Model
             Height = height;
         }
 
+        public override void ClearCheePon()
+        {
+            for (int i = 0; i < Width; ++i)
+                for (int j = 0; j < Height; ++j)
+                    (mAllNodes[i, j] as GomokuNode).CurrentGomokuNodeState = GomokuNodeState.Empty;
+        }
+
         public GomokuNode[] GetRightSideNodes(int x, int y, int count)
         {
             List<GomokuNode> rightSideNodes = new List<GomokuNode>();

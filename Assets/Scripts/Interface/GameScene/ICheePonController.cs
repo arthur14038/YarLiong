@@ -14,6 +14,10 @@ namespace YarLiong.Controller
 
     public interface ICheePonController : IController
     {
+        void SetGameEndListener(IGameEndListener gameEndListener);
+
         void SetView(ICheePonGameView view);
+
+        void StartGame();
     }
 }

@@ -962,7 +962,7 @@ GameObject:
   - component: {fileID: 5935491331384216669}
   - component: {fileID: 1672880509936346741}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Image_RoundRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1315,3 +1315,4 @@ MonoBehaviour:
   m_GridLayoutGroup: {fileID: 5961136412436286845}
   m_GomokuNodeView: {fileID: 2086820172054129481}
   m_ImageCurrentRound: {fileID: 2863772333820416202}
+  m_RoundRoot: {fileID: 1942013033059558317}

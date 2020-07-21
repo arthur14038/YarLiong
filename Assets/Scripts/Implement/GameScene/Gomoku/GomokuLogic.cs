@@ -4,18 +4,17 @@ using UnityEngine;
 using YarLiong.Controller;
 using YarLiong.Model;
 using YarLiong.View;
-using static YarLiong.Controller.ICheePonController;
 
 public class GomokuLogic : ICheePonController, ICheePonNodeListener
 {
     ICheePonGameView mCheePonGameView = null;
     GomokuCheePon mGomokuCheePon = null;
     CheePonRound mCurrentRound;
+    IGameEndListener mGameEndListener;
 
     public IEnumerator Init()
     {
         mGomokuCheePon = new GomokuCheePon(15, 15);
-        mCurrentRound = CheePonRound.Black;
         yield return null;
     }
 
@@ -31,10 +30,23 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener
         }
     }
 
+    public void SetGameEndListener(IGameEndListener gameEndListener)
+    {
+        mGameEndListener = gameEndListener;
+    }
+
     public void SetView(ICheePonGameView view)
     {
         mCheePonGameView = view;
+    }
+
+    public void StartGame()
+    {
+        mCurrentRound = CheePonRound.Black;
+
+        mGomokuCheePon.ClearCheePon();
         mCheePonGameView.SetCheePon(mGomokuCheePon, this);
+
         mCheePonGameView.SetRound(mCurrentRound);
         mCheePonGameView.Show();
     }
@@ -154,6 +166,6 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener
 
     void ThisRoundWin()
     {
-        Debug.LogFormat("ThisRoundWin mCurrentRound: {0}", mCurrentRound);
+        mGameEndListener.OnGameEnd(string.Format("{0} Win!", mCurrentRound));
     }
 }

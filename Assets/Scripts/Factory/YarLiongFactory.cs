@@ -62,6 +62,13 @@ public class YarLiongFactory
         }
     }
 
+    public static IGameSettingView GetGameSettingView()
+    {
+        var prefab = Resources.Load<GameObject>("Prefabs/GameSettingCanvas");
+        var viewObj = GameObject.Instantiate(prefab);
+        return viewObj.GetComponent<GameSettingView>();
+    }
+
     public static ICheePonController GetCheePonController(CheePonGameType cheePonGameType)
     {
         switch (cheePonGameType)
