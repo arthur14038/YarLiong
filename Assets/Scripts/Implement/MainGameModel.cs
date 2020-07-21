@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using YarLiong.Model;
 
-public class MainGameModel : IMainGameModel, ICheePonGameModel
+public class MainGameModel : IMainGameModel, ICheePonGameModel, IGaoZhiGameModel
 {
     string[] loadingTips = { "為了減少摩擦，增進和諧，我們必須努力培養雅量。",
         "人與人偶有摩擦，往往都是由於缺乏那分雅量的緣故。", 
@@ -11,6 +11,7 @@ public class MainGameModel : IMainGameModel, ICheePonGameModel
     };
 
     public CheePonGameType CurrentCheePonGameType { get ; set ; }
+    public GaoZhiGameType CurrentGaoZhiGameType { get ; set ; }
 
     public string GetLoadingTips()
     {

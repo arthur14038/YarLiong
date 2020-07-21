@@ -83,4 +83,10 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener, 
         YarLiongFactory.CheePonGameModel.CurrentCheePonGameType = gameType;
         MainGameLogic.Instance.LoadScene(SceneName.GameScene);
     }
+
+    public void OnClickGame(GaoZhiGameType gameType)
+    {
+        YarLiongFactory.GaoZhiGameModel.CurrentGaoZhiGameType = gameType;
+        MainGameLogic.Instance.LoadScene(SceneName.GameScene);
+    }
 }

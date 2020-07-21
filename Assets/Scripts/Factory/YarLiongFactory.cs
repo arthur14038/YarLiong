@@ -99,4 +99,14 @@ public class YarLiongFactory
             return mainGameModel;
         }
     }
+
+    public static IGaoZhiGameModel GaoZhiGameModel
+    {
+        get
+        {
+            if (mainGameModel == null)
+                mainGameModel = new MainGameModel();
+            return mainGameModel;
+        }
+    }
 }
