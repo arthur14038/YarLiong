@@ -6,8 +6,13 @@ using YarLiong.View;
 
 namespace YarLiong.Controller
 {
-    public interface ICheePonController : IController
+    public enum CheePonRound
     {
-        void SetView(ICheePonGameView view);
+        White,
+        Black,
+    }
+
+    public interface ICheePonController : IGameController
+    {
     }
 }

@@ -21,29 +21,9 @@ namespace YarLiong.Model
 
         public int Width { get; protected set; }
         public int Height { get; protected set; }
-        public virtual INode[,] AllNodes => throw new System.NotImplementedException();
+        public virtual INode[,] AllNodes => mAllNodes;
 
-        public virtual INode[] GetColumnNodes(int x)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public virtual INode[] GetLeftObliqueNodes(int x, int y)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public virtual INode[] GetRightObliqueNodes(int x, int y)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public virtual INode[] GetRowNodes(int y)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public virtual INode GetCertainNode(int x, int y)
+        public virtual void ClearCheePon()
         {
             throw new System.NotImplementedException();
         }

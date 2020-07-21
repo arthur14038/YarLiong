@@ -5,42 +5,169 @@ using YarLiong.Controller;
 using YarLiong.Model;
 using YarLiong.View;
 
-public class GomokuLogic : ICheePonController, ICheePonNodeListener
+public class GomokuLogic : ICheePonController, ICheePonNodeListener, IGameBackListener
 {
-    enum Round
-    {
-        White,
-        Black,
-    }
-
     ICheePonGameView mCheePonGameView = null;
     GomokuCheePon mGomokuCheePon = null;
-    Round mCurrentRound;
+    CheePonRound mCurrentRound;
+    IGameEndListener mGameEndListener;
 
     public IEnumerator Init()
     {
+        mCheePonGameView = YarLiongFactory.GetGameView(GameType.Gomoku) as ICheePonGameView;
         mGomokuCheePon = new GomokuCheePon(15, 15);
-        mCurrentRound = Round.Black;
-        yield return null;
+        mCheePonGameView.SetListener(this);
+        yield return mCheePonGameView.Init();
+    }
+
+    public void OnClickGameBack()
+    {
+        mGameEndListener.OnGameQuit();
     }
 
     public void OnClickNode(int x, int y)
     {
-        var node = mGomokuCheePon.GetCertainNode(x, y) as GomokuNode;
+        var node = mGomokuCheePon.AllNodes[x, y] as GomokuNode;
         if(node.CurrentGomokuNodeState == GomokuNodeState.Empty)
         {
-            Debug.LogFormat("OnClickNode x: {0}, y: {1}, before CurrentGomokuNodeState: {2}", x, y, node.CurrentGomokuNodeState);
-            node.CurrentGomokuNodeState = mCurrentRound == Round.Black ? GomokuNodeState.Black : GomokuNodeState.White;
+            node.CurrentGomokuNodeState = mCurrentRound == CheePonRound.Black ? GomokuNodeState.Black : GomokuNodeState.White;
             mCheePonGameView.UpdateNodeData(node);
-            mCurrentRound = mCurrentRound == Round.Black ? Round.White : Round.Black;
-            Debug.LogFormat("OnClickNode x: {0}, y: {1}, after CurrentGomokuNodeState: {2}", x, y, node.CurrentGomokuNodeState);
+
+            CheckVictory(x, y);
         }
     }
 
-    public void SetView(ICheePonGameView view)
+    public void SetGameEndListener(IGameEndListener gameEndListener)
     {
-        mCheePonGameView = view;
+        mGameEndListener = gameEndListener;
+    }
+
+    public void StartGame()
+    {
+        mCurrentRound = CheePonRound.Black;
+
+        mGomokuCheePon.ClearCheePon();
         mCheePonGameView.SetCheePon(mGomokuCheePon, this);
+
+        mCheePonGameView.SetRound(mCurrentRound);
         mCheePonGameView.Show();
+    }
+
+    void CheckVictory(int x, int y)
+    {
+        var node = mGomokuCheePon.AllNodes[x, y] as GomokuNode;
+
+        var checkColor = node.CurrentGomokuNodeState;
+        int connectCount = 1;
+        //檢查橫
+        var rightSideNodes = mGomokuCheePon.GetRightSideNodes(x, y, 4);
+        for(int i = 0; i < rightSideNodes.Length; ++i)
+        {
+            if (rightSideNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        var leftSideNodes = mGomokuCheePon.GetLeftSideNodes(x, y, 4);
+        for (int i = 0; i < leftSideNodes.Length; ++i)
+        {
+            if (leftSideNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        if (connectCount >= 5)
+        {
+            ThisRoundWin();
+            return;
+        }
+        else
+            connectCount = 1;
+
+        //檢查縱
+        var upSideNodes = mGomokuCheePon.GetUpSideNodes(x, y, 4);
+        for (int i = 0; i < upSideNodes.Length; ++i)
+        {
+            if (upSideNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        var downSideNodes = mGomokuCheePon.GetDownSideNodes(x, y, 4);
+        for (int i = 0; i < downSideNodes.Length; ++i)
+        {
+            if (downSideNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        if (connectCount >= 5)
+        {
+            ThisRoundWin();
+            return;
+        }
+        else
+            connectCount = 1;
+
+        //檢查斜向
+        var rightDownObliqueNodes = mGomokuCheePon.GetRightDownObliqueNodes(x, y, 4);
+        for (int i = 0; i < rightDownObliqueNodes.Length; ++i)
+        {
+            if (rightDownObliqueNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        var leftUpObliqueNodes = mGomokuCheePon.GetLeftUpObliqueNodes(x, y, 4);
+        for (int i = 0; i < leftUpObliqueNodes.Length; ++i)
+        {
+            if (leftUpObliqueNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        if (connectCount >= 5)
+        {
+            ThisRoundWin();
+            return;
+        }
+        else
+            connectCount = 1;
+
+        //檢查斜向
+        var rightUpObliqueNodes = mGomokuCheePon.GetRightUpObliqueNodes(x, y, 4);
+        for (int i = 0; i < rightUpObliqueNodes.Length; ++i)
+        {
+            if (rightUpObliqueNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        var leftDownObliqueNodes = mGomokuCheePon.GetLeftDownObliqueNodes(x, y, 4);
+        for (int i = 0; i < leftDownObliqueNodes.Length; ++i)
+        {
+            if (leftDownObliqueNodes[i].CurrentGomokuNodeState == checkColor)
+                connectCount++;
+            else
+                break;
+        }
+        if (connectCount >= 5)
+        {
+            ThisRoundWin();
+            return;
+        }
+        else
+            NextRound();
+    }
+
+    void NextRound()
+    {
+        mCurrentRound = mCurrentRound == CheePonRound.Black ? CheePonRound.White : CheePonRound.Black;
+        mCheePonGameView.SetRound(mCurrentRound);
+    }
+
+    void ThisRoundWin()
+    {
+        mGameEndListener.OnGameEnd(string.Format("{0} Win!", mCurrentRound));
     }
 }

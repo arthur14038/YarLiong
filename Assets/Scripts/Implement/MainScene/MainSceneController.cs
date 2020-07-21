@@ -78,9 +78,10 @@ public class MainSceneController : AbstractSceneController, IMainSceneListener, 
         mLuDouGaoView?.Show();
     }
 
-    public void OnClickGame(CheePonGameType gameType)
+    public void OnClickGame(GameType gameType)
     {
-        YarLiongFactory.CheePonGameModel.CurrentCheePonGameType = gameType;
+        YarLiongFactory.MainGameModel.CurrentGameType = gameType;
         MainGameLogic.Instance.LoadScene(SceneName.GameScene);
     }
+
 }

@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using YarLiong.Controller;
+using YarLiong.Model;
 using YarLiong.View;
 
 public class GaoZhiView : AbstractView, IGaoZhiView
 {
     [SerializeField]
     Button m_EscapeButton = null;
+    [SerializeField]
+    Button m_SnakeButton = null;
+
     IGaoZhiListener mGaoZhiListener = null;
 
     public override IEnumerator Init()
     {
         m_EscapeButton.onClick.AddListener(() => { mGaoZhiListener.OnClickEscape(ViewPage.GaoZhi); });
+        m_SnakeButton.onClick.AddListener(() => { mGaoZhiListener.OnClickGame(GameType.Snake); });
         yield return null;
     }
 

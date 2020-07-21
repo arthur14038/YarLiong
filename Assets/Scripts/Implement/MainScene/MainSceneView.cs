@@ -9,11 +9,11 @@ public class MainSceneView : AbstractView, IMainSceneView
 {
     IMainSceneListener mMainSceneListener = null;
     [SerializeField]
-    Button m_CheePonBotton;
+    Button m_CheePonBotton = null;
     [SerializeField]
-    Button m_GaoZhiBotton;
+    Button m_GaoZhiBotton = null;
     [SerializeField]
-    Button m_LuDouGaoBotton;
+    Button m_LuDouGaoBotton = null;
 
     public override IEnumerator Init()
     {

@@ -49,25 +49,40 @@ public class YarLiongFactory
         return viewObj.GetComponent<LuDouGaoView>();
     }
 
-    public static ICheePonGameView GetCheePonGameView(CheePonGameType cheePonGameType)
+    public static IGameView GetGameView(GameType gameType)
     {
-        switch (cheePonGameType)
+        GameObject prefab;
+        GameObject viewObj;
+        switch (gameType)
         {
-            case CheePonGameType.Gomoku:
-                var prefab = Resources.Load<GameObject>("Prefabs/CheePonGameCanvas");
-                var viewObj = GameObject.Instantiate(prefab);
+            case GameType.Gomoku:
+                prefab = Resources.Load<GameObject>("Prefabs/CheePonGameCanvas");
+                viewObj = GameObject.Instantiate(prefab);
                 return viewObj.GetComponent<GomokuGameView>();
+            case GameType.Snake:
+                prefab = Resources.Load<GameObject>("Prefabs/SnakeGameCanvas");
+                viewObj = GameObject.Instantiate(prefab);
+                return viewObj.GetComponent<SnakeGameView>();
             default:
                 return null;
         }
     }
 
-    public static ICheePonController GetCheePonController(CheePonGameType cheePonGameType)
+    public static IGameSettingView GetGameSettingView()
     {
-        switch (cheePonGameType)
+        var prefab = Resources.Load<GameObject>("Prefabs/GameSettingCanvas");
+        var viewObj = GameObject.Instantiate(prefab);
+        return viewObj.GetComponent<GameSettingView>();
+    }
+
+    public static IGameController GetGameController(GameType gameType)
+    {
+        switch (gameType)
         {
-            case CheePonGameType.Gomoku:
+            case GameType.Gomoku:
                 return new GomokuLogic();
+            case GameType.Snake:
+                return new SnakeLogic();
             default:
                 return null;
         }
@@ -75,16 +90,6 @@ public class YarLiongFactory
 
     static MainGameModel mainGameModel = null;
     public static IMainGameModel MainGameModel {
-        get
-        {
-            if (mainGameModel == null)
-                mainGameModel = new MainGameModel();
-            return mainGameModel;
-        }
-    }
-
-    public static ICheePonGameModel CheePonGameModel
-    {
         get
         {
             if (mainGameModel == null)

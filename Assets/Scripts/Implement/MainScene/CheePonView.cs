@@ -9,16 +9,16 @@ using YarLiong.Model;
 public class CheePonView : AbstractView, ICheePonView
 {
     [SerializeField]
-    Button m_EscapeButton;
+    Button m_EscapeButton = null;
     [SerializeField]
-    Button m_GomokuButton;
+    Button m_GomokuButton = null;
 
     ICheePonListener mCheePonListener = null;
 
     public override IEnumerator Init()
     {
         m_EscapeButton.onClick.AddListener(() => { mCheePonListener.OnClickEscape(ViewPage.CheePon); });
-        m_GomokuButton.onClick.AddListener(() => { mCheePonListener.OnClickGame(CheePonGameType.Gomoku); });
+        m_GomokuButton.onClick.AddListener(() => { mCheePonListener.OnClickGame(GameType.Gomoku); });
         yield return null;
     }
 

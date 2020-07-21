@@ -7,6 +7,6 @@ namespace YarLiong.Controller
 {
     public interface ICheePonListener: IEscapeListener
     {
-        void OnClickGame(CheePonGameType gameType);
+        void OnClickGame(GameType gameType);
     }
 }
