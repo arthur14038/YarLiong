@@ -83,6 +83,8 @@ public class YarLiongFactory
                 return new GomokuLogic();
             case GameType.Snake:
                 return new SnakeLogic();
+            case GameType.Tetris:
+                return null;
             default:
                 return null;
         }

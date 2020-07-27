@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using YarLiong.Controller;
+using YarLiong.Model;
 
 namespace YarLiong.View
 {
     public class LuDouGaoView : AbstractView, ILuDouGaoView
     {
         [SerializeField]
-        private Button m_LuDouGanBtn = null;
+        private Button m_TetrisBtn = null;
         [SerializeField]
         private Button m_BackBtn = null;
 
@@ -18,6 +19,7 @@ namespace YarLiong.View
         public override IEnumerator Init()
         {
             m_BackBtn.onClick.AddListener(() => { mLuDouGaoListener.OnClickEscape(ViewPage.LuDouGao); });
+            m_TetrisBtn.onClick.AddListener(() => { mLuDouGaoListener.OnClickGame(GameType.Tetris); });
 
             yield return null;
         }
