@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using YarLiong.Controller;
-using YarLiong.Model;
 
 namespace YarLiong.View
 {
-    public interface ICheePonNodeView
+    public interface ICheePonNodeView : INodeView
     {
         void SetListener(ICheePonNodeListener listener);
-
-        void SetNode(INode node);
     }
 }

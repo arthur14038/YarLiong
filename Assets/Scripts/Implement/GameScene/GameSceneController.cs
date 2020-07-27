@@ -52,6 +52,11 @@ public class GameSceneController : AbstractSceneController, IGameSettingListener
 
     void OnDestroy()
     {
-        mGameController.OnDestroy();
+        mGameController?.OnDestroy();
+    }
+
+    void Update()
+    {
+        mGameController?.Update();
     }
 }

@@ -11,5 +11,7 @@ namespace YarLiong.Controller
         void SetGameEndListener(IGameEndListener gameEndListener);
 
         void OnDestroy();
+
+        void Update();
     }
 }

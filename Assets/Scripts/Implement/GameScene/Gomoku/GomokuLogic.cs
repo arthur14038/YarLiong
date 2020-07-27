@@ -175,4 +175,9 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener, IGameBackLi
     {
         mGameEndListener.OnGameEnd(string.Format("{0} Win!", mCurrentRound));
     }
+
+    public void Update()
+    {
+        throw new System.NotImplementedException();
+    }
 }
