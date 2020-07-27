@@ -9,5 +9,7 @@ namespace YarLiong.Controller
         void StartGame();
 
         void SetGameEndListener(IGameEndListener gameEndListener);
+
+        void OnDestroy();
     }
 }

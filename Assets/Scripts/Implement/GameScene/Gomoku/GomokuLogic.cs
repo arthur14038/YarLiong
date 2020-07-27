@@ -20,6 +20,11 @@ public class GomokuLogic : ICheePonController, ICheePonNodeListener, IGameBackLi
         yield return mCheePonGameView.Init();
     }
 
+    public void OnDestroy()
+    {
+
+    }
+
     public void OnClickGameBack()
     {
         mGameEndListener.OnGameQuit();

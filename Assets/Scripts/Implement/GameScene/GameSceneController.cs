@@ -49,4 +49,9 @@ public class GameSceneController : AbstractSceneController, IGameSettingListener
     {
         MainGameLogic.Instance.LoadScene(SceneName.MainScene);
     }
+
+    void OnDestroy()
+    {
+        mGameController.OnDestroy();
+    }
 }
