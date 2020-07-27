@@ -49,6 +49,12 @@ namespace YarLiong.View
                 var pattern = block.PatternType;
                 var blockView = mBlockViews[block.X, block.Y];
                 blockView.SetBlockColor(pattern);
+                //for debug
+                if (pattern == BlockPattern.Pattern.None)
+                    blockView.SetText(string.Empty);
+                else
+                    blockView.SetText(block.ToString());
+                Debug.Log(block.ToString());
             }
         }
     }

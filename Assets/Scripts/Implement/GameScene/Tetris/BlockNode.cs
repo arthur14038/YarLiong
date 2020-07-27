@@ -1,4 +1,6 @@
-﻿namespace YarLiong.Model
+﻿using UnityEngine;
+
+namespace YarLiong.Model
 {
     public class BlockNode : Node
     {
@@ -15,8 +17,13 @@
         public BlockType Type { get { return mBlockType; } }
         public BlockPattern.Pattern PatternType { get { return mPatternType; } }
 
+        Vector3 mPoint = new Vector3();
+        public Vector3 Point { get { return mPoint; } }
+
         public BlockNode(int x, int y) : base(x, y)
         {
+            mPoint.Set(x, y, 0);
+
             mBlockType = BlockType.None;
             mPatternType = BlockPattern.Pattern.None;
         }
@@ -29,6 +36,11 @@
         public void SetBlockPattern(BlockPattern.Pattern blockPattern)
         {
             mPatternType = blockPattern;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("({0},{1})", X, Y);
         }
     }
 }

@@ -26,16 +26,18 @@ namespace YarLiong.Model
         Pattern mPatternType = Pattern.None;
         public Pattern PatternType { get { return mPatternType; } }
 
-        private List<Node[]> mPatternModel;
-        public List<Node[]> PatternModel { get { return mPatternModel; } }
+        //private List<Node[]> mPatternModel;
+        //public List<Node[]> PatternModel { get { return mPatternModel; } }
 
         public int CurrentModelIndex = 0;
+
+        public Vector3 Pivot { get; set; }
 
         public BlockPattern()
         {
             mPatternType = (BlockPattern.Pattern)Random.Range(1, 8);
-            mPatternType = BlockPattern.Pattern.I;
-            mPatternModel = GetModel(mPatternType);
+            //mPatternType = BlockPattern.Pattern.I;
+            //mPatternModel = GetModel(mPatternType);
         }
 
         //public BlockPattern(BlockNode[] blockNodes, Pattern pattern)
@@ -50,6 +52,26 @@ namespace YarLiong.Model
             SetPatternType(mPatternType);
         }
 
+        public void InitPivot(Pattern pattern)
+        {
+            switch (pattern)
+            {
+                case BlockPattern.Pattern.S:
+                case BlockPattern.Pattern.Z:
+                case BlockPattern.Pattern.L:
+                case BlockPattern.Pattern.J:
+                case BlockPattern.Pattern.T:
+                    Pivot = BlockNodes[2].Point;
+                    return;
+                case BlockPattern.Pattern.O:
+                    Pivot = new Vector3(BlockNodes[0].X + 0.5f, BlockNodes[0].Y + 0.5f, 0f);
+                    return;
+                case Pattern.I:
+                    Pivot = new Vector3(BlockNodes[2].X - 0.5f, BlockNodes[2].Y + 0.5f, 0f);
+                    break;
+            }
+        }
+
         public void SetPatternType(Pattern pattern)
         {
             for (int i = 0; i < mBlockNodes.Length; i++)
@@ -58,31 +80,23 @@ namespace YarLiong.Model
             }
         }
 
-        public List<Node[]> GetModel(Pattern pattern)
-        {
-            switch (pattern)
-            {
-                default:
-                case Pattern.I:
-                    return Pattern_I;
-            }
-        }
-
-        //public int[,,] Pattern_I = new int[,,]
+        //public List<Node[]> GetModel(Pattern pattern)
         //{
-        //   { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 } },
-        //   { { 2, 0 }, { 2, 1 }, { 2, 2 }, { 2, 3 } },
-        //   { { 0, 2 }, { 1, 2 }, { 2, 2 }, { 3, 2 } },
-        //   { { 1, 0 }, { 1, 1 }, { 1, 2 }, { 1, 3 } },
-        //};
+        //    switch (pattern)
+        //    {
+        //        default:
+        //        case Pattern.I:
+        //            return Pattern_I;
+        //    }
+        //}
 
-        public List<Node[]> Pattern_I = new List<Node[]>()
-        {
-            new Node[4] { new Node(0, 1), new Node(1, 1) , new Node(2, 1) , new Node(3, 1) },
-            new Node[4] { new Node(2, 0), new Node(2, 1) , new Node(2, 2) , new Node(2, 3) },
-            new Node[4] { new Node(0, 2), new Node(1, 2) , new Node(2, 2) , new Node(3, 2) },
-            new Node[4] { new Node(1, 0), new Node(1, 1) , new Node(1, 2) , new Node(1, 3) },
-        };
+        //public List<Node[]> Pattern_I = new List<Node[]>()
+        //{
+        //    new Node[4] { new Node(0, 1), new Node(1, 1) , new Node(2, 1) , new Node(3, 1) },
+        //    new Node[4] { new Node(2, 0), new Node(2, 1) , new Node(2, 2) , new Node(2, 3) },
+        //    new Node[4] { new Node(0, 2), new Node(1, 2) , new Node(2, 2) , new Node(3, 2) },
+        //    new Node[4] { new Node(1, 0), new Node(1, 1) , new Node(1, 2) , new Node(1, 3) },
+        //};
     }
 
 }

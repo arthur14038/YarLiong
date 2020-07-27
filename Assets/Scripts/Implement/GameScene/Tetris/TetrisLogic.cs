@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using YarLiong.Controller;
@@ -55,7 +56,7 @@ namespace YarLiong
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                //旋轉
+                //順時針旋轉
                 TurnRight();
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -74,6 +75,12 @@ namespace YarLiong
                 MoveLeft();
             }
 
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                //逆時針轉
+                TurnLeft();
+            }
+
             if (mTimer < mFallDownTime)
             {
                 mTimer += Time.deltaTime;
@@ -82,8 +89,8 @@ namespace YarLiong
             {
                 if (mBlockPattern == null)
                     CreateNewPattern();
-                else
-                    MoveDown();
+                //else
+                //    MoveDown();
                 mTimer = 0f;
             }
         }
@@ -95,6 +102,7 @@ namespace YarLiong
             mBlockPattern = new BlockPattern();
             var blockGroup = GetBlockGroup(mBlockPattern.PatternType);
             mBlockPattern.SetBlockNodes(blockGroup);
+            mBlockPattern.InitPivot(mBlockPattern.PatternType);
 
             SetView(mBlockPattern);
         }
@@ -188,6 +196,8 @@ namespace YarLiong
 
                 mBlockPattern.SetBlockNodes(newBlocks);
                 SetView(mBlockPattern);
+
+                mBlockPattern.Pivot += new Vector3(0, 1, 0);
             }
         }
 
@@ -226,6 +236,8 @@ namespace YarLiong
 
             mBlockPattern.SetBlockNodes(newBlocks);
             SetView(mBlockPattern);
+
+            mBlockPattern.Pivot += new Vector3(1, 0, 0);
         }
 
         private void MoveLeft()
@@ -263,6 +275,8 @@ namespace YarLiong
 
             mBlockPattern.SetBlockNodes(newBlocks);
             SetView(mBlockPattern);
+
+            mBlockPattern.Pivot += new Vector3(-1, 0, 0);
         }
 
         #endregion
@@ -279,80 +293,93 @@ namespace YarLiong
 
             switch (mBlockPattern.PatternType)
             {
+                case BlockPattern.Pattern.O:
+                    return;
                 case BlockPattern.Pattern.S:
                 case BlockPattern.Pattern.Z:
                 case BlockPattern.Pattern.L:
                 case BlockPattern.Pattern.J:
                 case BlockPattern.Pattern.T:
-                case BlockPattern.Pattern.O:
-                    return;
                 case BlockPattern.Pattern.I:
-                    
-                    if (mBlockPattern.CurrentModelIndex == 0)
-                    {
-                        if (mTetrisGrid.GetNode(nodes[0].X, nodes[0].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 2)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[3].X, nodes[3].Y + 1)?.Type != BlockNode.BlockType.Stuck)
-                        {
-                            newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X + 2, nodes[0].Y - 1);
-                            newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X + 1, nodes[1].Y);
-                            newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 1);
-                            newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X - 1, nodes[3].Y + 2);
-                        }
-                    }
-                    else if (mBlockPattern.CurrentModelIndex == 1)
-                    {
-                        if (mTetrisGrid.GetNode(nodes[0].X + 1, nodes[0].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X + 1, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X + 1, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X - 1, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X - 2, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[3].X - 1, nodes[3].Y)?.Type != BlockNode.BlockType.Stuck)
-                        {
-                            newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X - 2, nodes[0].Y + 2);
-                            newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X - 1, nodes[1].Y + 1);
-                            newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y);
-                            newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X + 1, nodes[3].Y - 1);
-                        }
-                    }
-                    else if (mBlockPattern.CurrentModelIndex == 2)
-                    {
-                        if (mTetrisGrid.GetNode(nodes[0].X, nodes[0].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 2)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[3].X, nodes[3].Y + 1)?.Type != BlockNode.BlockType.Stuck)
-                        {
-                            newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X + 1, nodes[0].Y - 2);
-                            newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 1);
-                            newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X - 1, nodes[2].Y);
-                            newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X - 2, nodes[3].Y + 1);
-                        }
-                    }
-                    else if (mBlockPattern.CurrentModelIndex == 3)
-                    {
-                        if (mTetrisGrid.GetNode(nodes[0].X + 1, nodes[0].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X + 1, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X + 2, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[1].X - 1, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[2].X - 1, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
-                           mTetrisGrid.GetNode(nodes[3].X - 1, nodes[3].Y)?.Type != BlockNode.BlockType.Stuck)
-                        {
-                            newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X - 1, nodes[0].Y + 1);
-                            newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y);
-                            newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X + 1, nodes[2].Y - 1);
-                            newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X + 2, nodes[3].Y - 2);
-                        }
-                    }
+                    Vector3 pivot = mBlockPattern.Pivot;
+                    var p0 = RotatePointAroundPivot(nodes[0].Point, pivot, Quaternion.AngleAxis(90, Vector3.forward));
+                    var p1 = RotatePointAroundPivot(nodes[1].Point, pivot, Quaternion.AngleAxis(90, Vector3.forward));
+                    var p2 = RotatePointAroundPivot(nodes[2].Point, pivot, Quaternion.AngleAxis(90, Vector3.forward));
+                    var p3 = RotatePointAroundPivot(nodes[3].Point, pivot, Quaternion.AngleAxis(90, Vector3.forward));
+
+                    newBlocks[0] = mTetrisGrid.GetNode(Convert.ToInt32(p0.x), Convert.ToInt32(p0.y));
+                    newBlocks[1] = mTetrisGrid.GetNode(Convert.ToInt32(p1.x), Convert.ToInt32(p1.y));
+                    newBlocks[2] = mTetrisGrid.GetNode(Convert.ToInt32(p2.x), Convert.ToInt32(p2.y));
+                    newBlocks[3] = mTetrisGrid.GetNode(Convert.ToInt32(p3.x), Convert.ToInt32(p3.y));
+
+                    #region dirty
+                    //if (mBlockPattern.CurrentModelIndex == 0)
+                    //{
+                    //    if (mTetrisGrid.GetNode(nodes[0].X, nodes[0].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 2)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[3].X, nodes[3].Y + 1)?.Type != BlockNode.BlockType.Stuck)
+                    //    {
+                    //        newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X + 2, nodes[0].Y - 1);
+                    //        newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X + 1, nodes[1].Y);
+                    //        newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 1);
+                    //        newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X - 1, nodes[3].Y + 2);
+                    //    }
+                    //}
+                    //else if (mBlockPattern.CurrentModelIndex == 1)
+                    //{
+                    //    if (mTetrisGrid.GetNode(nodes[0].X + 1, nodes[0].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X + 1, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X + 1, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X - 1, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X - 2, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[3].X - 1, nodes[3].Y)?.Type != BlockNode.BlockType.Stuck)
+                    //    {
+                    //        newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X - 2, nodes[0].Y + 2);
+                    //        newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X - 1, nodes[1].Y + 1);
+                    //        newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y);
+                    //        newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X + 1, nodes[3].Y - 1);
+                    //    }
+                    //}
+                    //else if (mBlockPattern.CurrentModelIndex == 2)
+                    //{
+                    //    if (mTetrisGrid.GetNode(nodes[0].X, nodes[0].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 2)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X, nodes[2].Y + 1)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[3].X, nodes[3].Y + 1)?.Type != BlockNode.BlockType.Stuck)
+                    //    {
+                    //        newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X + 1, nodes[0].Y - 2);
+                    //        newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y - 1);
+                    //        newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X - 1, nodes[2].Y);
+                    //        newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X - 2, nodes[3].Y + 1);
+                    //    }
+                    //}
+                    //else if (mBlockPattern.CurrentModelIndex == 3)
+                    //{
+                    //    if (mTetrisGrid.GetNode(nodes[0].X + 1, nodes[0].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X + 1, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X + 2, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[1].X - 1, nodes[1].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[2].X - 1, nodes[2].Y)?.Type != BlockNode.BlockType.Stuck &&
+                    //       mTetrisGrid.GetNode(nodes[3].X - 1, nodes[3].Y)?.Type != BlockNode.BlockType.Stuck)
+                    //    {
+                    //        newBlocks[0] = mTetrisGrid.GetNode(nodes[0].X - 1, nodes[0].Y + 1);
+                    //        newBlocks[1] = mTetrisGrid.GetNode(nodes[1].X, nodes[1].Y);
+                    //        newBlocks[2] = mTetrisGrid.GetNode(nodes[2].X + 1, nodes[2].Y - 1);
+                    //        newBlocks[3] = mTetrisGrid.GetNode(nodes[3].X + 2, nodes[3].Y - 2);
+                    //    }
+                    //}
+                    #endregion
+
                     break;
             }
 
             //檢查有沒有拿到空的或是已落定的方塊
-            for(int i = 0; i < newBlocks.Length; i++)
+            for (int i = 0; i < newBlocks.Length; i++)
             {
                 if (newBlocks[i] == null || newBlocks[i].Type == BlockNode.BlockType.Stuck)
                     return;
@@ -369,7 +396,50 @@ namespace YarLiong
 
         private void TurnLeft()
         {
+            if (mBlockPattern == null)
+                return;
 
+            var nodes = mBlockPattern.BlockNodes;
+            var newBlocks = new BlockNode[4];
+
+            switch (mBlockPattern.PatternType)
+            {
+                case BlockPattern.Pattern.O:
+                    return;
+                case BlockPattern.Pattern.S:
+                case BlockPattern.Pattern.Z:
+                case BlockPattern.Pattern.L:
+                case BlockPattern.Pattern.J:
+                case BlockPattern.Pattern.T:
+                case BlockPattern.Pattern.I:
+                    Vector3 pivot = mBlockPattern.Pivot;
+                    var p0 = RotatePointAroundPivot(nodes[0].Point, pivot, Quaternion.AngleAxis(-90, Vector3.forward));
+                    var p1 = RotatePointAroundPivot(nodes[1].Point, pivot, Quaternion.AngleAxis(-90, Vector3.forward));
+                    var p2 = RotatePointAroundPivot(nodes[2].Point, pivot, Quaternion.AngleAxis(-90, Vector3.forward));
+                    var p3 = RotatePointAroundPivot(nodes[3].Point, pivot, Quaternion.AngleAxis(-90, Vector3.forward));
+
+                    newBlocks[0] = mTetrisGrid.GetNode(Convert.ToInt32(p0.x), Convert.ToInt32(p0.y));
+                    newBlocks[1] = mTetrisGrid.GetNode(Convert.ToInt32(p1.x), Convert.ToInt32(p1.y));
+                    newBlocks[2] = mTetrisGrid.GetNode(Convert.ToInt32(p2.x), Convert.ToInt32(p2.y));
+                    newBlocks[3] = mTetrisGrid.GetNode(Convert.ToInt32(p3.x), Convert.ToInt32(p3.y));
+
+                    break;
+            }
+
+            //檢查有沒有拿到空的或是已落定的方塊
+            for (int i = 0; i < newBlocks.Length; i++)
+            {
+                if (newBlocks[i] == null || newBlocks[i].Type == BlockNode.BlockType.Stuck)
+                    return;
+            }
+
+            mBlockPattern.CurrentModelIndex = (mBlockPattern.CurrentModelIndex + 1) % 4;
+
+            var oldBlocks = mBlockPattern.BlockNodes;
+            ClearBlockStatus(oldBlocks);
+
+            mBlockPattern.SetBlockNodes(newBlocks);
+            SetView(mBlockPattern);
         }
 
         #endregion
@@ -407,6 +477,11 @@ namespace YarLiong
             }
 
             m_GridView.SetBlockView(blockNodes);
+        }
+
+        private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion rotation)
+        {
+            return rotation * (point - pivot) + pivot;
         }
     }
 }

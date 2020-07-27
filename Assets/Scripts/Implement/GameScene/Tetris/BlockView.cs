@@ -10,6 +10,8 @@ namespace YarLiong.View
     {
         [SerializeField]
         Image m_BlockImg = null;
+        [SerializeField]
+        Text m_Text = null;
 
         Color mNoneColor = Color.gray;
         Color mFallingColor = Color.yellow;
@@ -68,6 +70,11 @@ namespace YarLiong.View
                     m_BlockImg.color = mPatternColor_I;
                     break;
             }
+        }
+
+        public void SetText(string text)
+        {
+            m_Text.text = text;
         }
     }
 }
